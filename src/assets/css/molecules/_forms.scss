@@ -1,0 +1,21 @@
+form {
+  fieldset {
+    margin: 1rem auto;
+    padding: 1rem 0.5rem;
+    max-width: 30rem;
+    border: 0;
+    background-color: lighten(grey, 40%);
+  }
+  legend {
+    text-align: left;
+    margin: 0;
+  }
+}
+.input-group {
+  display: flex;
+  flex-direction: column;
+  .input-label-holder {
+    text-align: left;
+    margin: 1rem;
+  }
+}
