@@ -1,0 +1,8 @@
+section {
+  min-height: 100vh;
+  padding: 6rem 0;
+  &:nth-of-type(odd){
+    background-color: $color-primary;
+    color: $color-accent;
+  }
+}

@@ -1,0 +1,162 @@
+/*!
+* Theme Name: Basic Theme
+* Theme URI: https://underscores.me/
+* Author: Jesse van Thijn
+* Author URI: https://creations4all.nl
+* Description: Description
+* Version: 1.0.0
+* License: GNU General Public License v2 or later
+* License URI: LICENSE
+* Text Domain: base-theme
+*/
+
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin:         0;
+    padding:        0;
+    border:         0;
+    vertical-align: baseline;
+}
+
+* {
+    box-sizing:              border-box;
+    -webkit-font-smoothing:  antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+::-moz-selection, ::selection { /* Code for Firefox */
+    color: $color-secondary;
+    background: $color-primary;
+}
+figure {
+  overflow: hidden;
+  width: 100%;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    vertical-align: bottom;
+  }
+}
+.container {
+    width:         90%;
+    max-width:     1080px;
+    margin-right:  auto;
+    margin-left:   auto;
+
+    @include media-tablet {
+        width: 85%;
+    }
+
+    @include media-desktop {
+        width: 80%;
+    }
+}
+.container {
+  padding-right: .25rem;
+  padding-left:  .25rem;
+  position: relative;
+}
+// body {
+//   line-height: 1.4;
+//   position: relative;
+//   height: 100vh;
+// }
+body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+html {
+  overflow-y: auto;
+  background-color: transparent;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+::-webkit-scrollbar {
+  width: 0.5em;
+  height: 0.5em;
+}
+::-webkit-scrollbar-track {
+  background: #eee;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #bbb;
+}
+h1, h2, h3, h4 {
+  letter-spacing: 0.05em;
+
+}
+p, li, figcaption, label, input, textarea, a {
+  font-size: 1rem;
+  letter-spacing: 0.075em;
+}
+p > a {
+  font-family: inherit;
+}
+
+p, figcaption {
+  margin-bottom: 1.3em;
+  line-height: 1.75;
+}
+figcaption {
+  padding-top: 0.5rem;
+}
+
+h1, h2, h3, h4 {
+  line-height:   1.2;
+  margin-bottom: 1.2rem;
+}
+
+h1 {
+  font-size: 2.441rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+h4 {
+  font-size: 1rem;
+}
+
+
+input {
+    border:    1px solid #ccc;
+    padding:   1rem;
+    font-size: 1rem;
+    outline:   none;
+}
+
+.row {
+    display:      flex;
+    flex-wrap:    wrap;
+    margin-left:  -.25rem;
+    margin-right: -.25rem;
+}

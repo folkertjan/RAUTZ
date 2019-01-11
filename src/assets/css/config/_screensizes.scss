@@ -1,0 +1,54 @@
+// Screen Sizes
+// --------------------------------------------------
+$phone:             380px;
+$tablet:            480px;
+$big-tablet:        600px;
+$small-desktop:     768px;
+$desktop:           1024px;
+$desktop-large:     1280px;
+$desktop-full:      1400px;
+
+// Media Queries
+// --------------------------------------------------
+
+@mixin media-phone {
+    @media screen and (min-width: $phone) {
+        @content;
+    }
+}
+
+@mixin media-tablet {
+    @media screen and (min-width: $tablet) {
+        @content;
+    }
+}
+
+@mixin media-big-tablet {
+    @media screen and (min-width: $big-tablet) {
+        @content;
+    }
+}
+
+@mixin media-small-desktop {
+    @media screen and (min-width: $small-desktop) {
+        @content;
+    }
+}
+
+@mixin media-desktop {
+    @media screen and (min-width: $desktop) {
+        @content;
+    }
+}
+
+@mixin media-desktop-large {
+    @media screen and (min-width: $desktop-large) {
+        @content;
+    }
+}
+
+@mixin media-desktop-full {
+    @media screen and (min-width: $desktop-full) {
+        @content;
+    }
+}

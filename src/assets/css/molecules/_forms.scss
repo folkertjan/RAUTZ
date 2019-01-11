@@ -1,21 +1,83 @@
 form {
   fieldset {
-    margin: 1rem auto;
-    padding: 1rem 0.5rem;
-    max-width: 30rem;
+    margin: 2rem 0;
+    padding: 2rem 1rem;
+    max-width: 20rem;
     border: 0;
     background-color: lighten(grey, 40%);
   }
   legend {
     text-align: left;
     margin: 0;
+    font-weight: 700;
+  }
+  p {
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 0;
+  }
+  select, input, label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: $color-primary;
+  }
+  select, input {
+    border: none;
+    padding: 0.5rem 0.75rem;
+  }
+  input[type="radio"] {
+    appearance: none;
+    background: $color-secondary;
+    border-radius: 50%;
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    +label {
+      display: inline-block;
+      &::after {
+        opacity: 0;
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        top: 0.33rem;
+        left: 0.25rem;
+        background: $color-primary;
+        content: "";
+        position: absolute;
+        transition: all 0.3s ease-in-out;
+        display: block;
+      }
+    }
+    &:checked {
+      +label {
+        &::after {
+          opacity: 1;
+        }
+      }
+
+    }
   }
 }
 .input-group {
-  display: flex;
-  flex-direction: column;
   .input-label-holder {
+    &.radio {
+      display: flex;
+      align-items: center;
+      position: relative;
+      input {
+        margin-right: 0.5rem;
+      }
+      label {
+        margin-bottom: 0;
+      }
+    }
     text-align: left;
-    margin: 1rem;
+    margin: 1rem 0;
+    &:first-of-type {
+      margin-top:0;
+    }
   }
 }
