@@ -4,7 +4,6 @@ form {
     padding: 2rem 1rem;
     max-width: 20rem;
     border: 0;
-    background-color: lighten(grey, 40%);
   }
   legend {
     text-align: left;
@@ -19,7 +18,6 @@ form {
   select, input, label {
     display: block;
     margin-bottom: 0.5rem;
-    color: $color-primary;
   }
   select, input {
     border: none;
@@ -27,7 +25,7 @@ form {
   }
   input[type="radio"] {
     appearance: none;
-    background: $color-secondary;
+    background: $color-white;
     border-radius: 50%;
     height: 1rem;
     width: 1rem;
@@ -42,9 +40,9 @@ form {
         width: 0.5rem;
         height: 0.5rem;
         border-radius: 50%;
-        top: 0.33rem;
+        top: 0.36rem;
         left: 0.25rem;
-        background: $color-primary;
+        background: $color-dark;
         content: "";
         position: absolute;
         transition: all 0.3s ease-in-out;

@@ -26,7 +26,7 @@ export default {
   mounted() {
     store.subscribe((mutation, state) => {
       if (mutation.type === 'updateFilters') {
-        const filters = store.state.filters
+        const filters = state.filters
         if (filters[this.name] == this.value) {
           document.querySelector('#input-' + this.uniqueID).checked = true
         }

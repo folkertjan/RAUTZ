@@ -30,7 +30,7 @@ export default new Vuex.Store({
       }
       state.filtered = filter.all(state.farmers, state.filters)
       state.total = state.filtered.length
-      console.log(state.total, state.filters)
+      console.log(state.total)
     },
     updateTotal(state, payload) {
       state.total = payload.value

@@ -17,11 +17,11 @@ header {
   top: 0;
   left: 0;
   width: 100%;
+  z-index: 3;
   nav {
     padding: 1rem;
     a {
       font-size: 1rem;
-      color: #42b983;
       text-decoration: none;
       &.router-link-exact-active {
         text-decoration: underline;

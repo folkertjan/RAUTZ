@@ -41,8 +41,8 @@ time, mark, audio, video {
 }
 
 ::-moz-selection, ::selection { /* Code for Firefox */
-    color: $color-secondary;
-    background: $color-primary;
+    color: $color-heading;
+    background: $color-section-dark;
 }
 figure {
   overflow: hidden;
@@ -86,6 +86,7 @@ body {
   right: 0;
   overflow-y: scroll;
   overflow-x: hidden;
+  color: $color-font-dark;
 }
 html {
   overflow-y: auto;
@@ -95,23 +96,29 @@ html::-webkit-scrollbar {
   display: none;
 }
 ::-webkit-scrollbar {
-  width: 0.5em;
-  height: 0.5em;
+  width: 0.375em;
+  height: 0.375em;
 }
 ::-webkit-scrollbar-track {
-  background: #eee;
+  background: $color-section-light;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #bbb;
+  background-color: $color-font-dark;
+}
+#app {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 h1, h2, h3, h4 {
   letter-spacing: 0.05em;
-
+  color: $color-heading;
+  font-family: $font-heading;
 }
-p, li, figcaption, label, input, textarea, a {
+p, li, figcaption, label, input, textarea, a, legend {
   font-size: 1rem;
   letter-spacing: 0.075em;
+  font-family: $font-regular;
 }
 p > a {
   font-family: inherit;

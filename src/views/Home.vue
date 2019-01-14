@@ -21,7 +21,7 @@
 <script>
 // @ is an alias to /src
 import store from '@/store.js'
-import data from '@/modules/format.js'
+import format from '@/modules/format.js'
 import Landing from '@/components/sections/Landing.vue'
 import Farmer from '@/components/sections/Farmer.vue'
 import Land from '@/components/sections/Land.vue'
@@ -51,15 +51,15 @@ export default {
     }
   },
   methods: {
-    format: function() {
+    init: function() {
       this.loading = true
       const file = '/data/data.csv'
-      data.format(file).then(raw => {
+      format.data(file).then(data => {
         // .map(farmer => farmer.all_land_cultivated_ha)
         // .filter(value => value ? true : false)
         store.commit({
           type: 'updateFarmers',
-          value: raw
+          value: data
         })
         this.loading = false
       })
@@ -76,7 +76,7 @@ export default {
     }
   },
   mounted() {
-    this.format()
+    this.init()
     this.screen()
     window.addEventListener('resize', () => {
       this.screen()
