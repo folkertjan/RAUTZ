@@ -11,7 +11,9 @@ export default new Vuex.Store({
     filtered: [],
     filters: {},
     total: null,
-    ids: []
+    ids: [],
+    split: false,
+    sidebar: false
   },
   mutations: {
     updateFarmers(state, payload) {
@@ -37,6 +39,12 @@ export default new Vuex.Store({
     },
     addID(state, payload) {
       state.ids.push(payload.value)
+    },
+    toggleSplit(state){
+      state.split = !state.split
+    },
+    toggleSidebar(state){
+      state.sidebar = !state.sidebar
     }
   },
   actions: {},

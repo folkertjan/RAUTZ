@@ -1,12 +1,11 @@
 <template>
-  <main class="home" :class="loading ? 'loading' : ''">
+  <main :class="'home' + (sidebar ? ' sidebar' : '') + (loading ? ' loading' : '')">
     <section class="" v-if="screenWidth < 1080 && screenHeight < 768">
       <div class="container">
         <h3>This is a desktop site</h3>
       </div>
     </section>
     <div class="section-holder" v-else>
-      <side-bar />
       <landing />
       <farmer />
       <land />
@@ -29,7 +28,6 @@ import Income from '@/components/sections/Income.vue'
 import FoodDiversity from '@/components/sections/FoodDiversity.vue'
 import FoodSecurity from '@/components/sections/FoodSecurity.vue'
 import SiteSummary from '@/components/sections/SiteSummary.vue'
-import SideBar from '@/components/organisms/SideBar.vue'
 
 export default {
   name: 'home',
@@ -40,12 +38,12 @@ export default {
     Income,
     FoodDiversity,
     FoodSecurity,
-    SiteSummary,
-    SideBar
+    SiteSummary
   },
   data() {
     return {
       loading: true,
+      sidebar: false,
       screenWidth: 1920,
       screenHeight: 1080
     }
@@ -78,6 +76,11 @@ export default {
   mounted() {
     this.init()
     this.screen()
+    store.subscribe((mutation, state) => {
+      if (mutation.type === 'toggleSidebar') {
+        this.sidebar = state.sidebar
+      }
+    })
     window.addEventListener('resize', () => {
       this.screen()
     })
@@ -88,5 +91,11 @@ export default {
 <style scoped lang="scss">
 h1 {
   padding-left: 1rem;
+}
+main {
+  transition: all 0.3s ease-out;
+  &.sidebar {
+    transform: translateX(-15rem);
+  }
 }
 </style>

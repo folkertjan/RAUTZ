@@ -56,13 +56,25 @@ const bar = {
       .style('text-anchor', 'middle')
     /* == End source == */
 
-    svg.append('g').classed('parent', true)
+    svg.append('g')
+      .classed('parent', true)
+      .attr('transform', `translate(${this.margin.left * 2},0)`)
 
     this.update(element, data)
   },
 
   update(element, data) {
-    const color = helper.color(data)
+    if (!data || data.length === 0) {
+      return
+    }
+    const stack = d3.stack()
+      .keys(Object.keys(data[0]))
+
+    console.log('fired');
+
+    const stacked = stack(data)
+
+    const color = helper.color(stacked)
 
     const svg = d3.select(`#${element} svg`)
 
@@ -79,9 +91,10 @@ const bar = {
 		Small edits by me to work with my visualisation
 		*/
 
+
     const x = d3
       .scaleBand()
-      .domain(data.map(d => d.name))
+      .domain(['income'])
       .range([this.margin.left, this.width() - this.margin.right])
       .padding(0.1)
 
@@ -115,28 +128,27 @@ const bar = {
 
     const chart = d3.select(`#${element} .parent`)
 
-    const rect = chart.selectAll('rect').data(data)
+    const rect = chart.selectAll('rect').data(stacked)
 
     rect
       .enter()
       .append('rect')
-      .attr('title', (d, i) => d.name)
-      .on('mouseover', d => tooltip.show(element, `${d.name}: ${d.value}`))
+      .attr('title', (d, i) => d['key'])
+      .on('mouseover', d => tooltip.show(element, `${d.key}: ${d[0][1] - d[0][0]}`))
       .on('mouseout', () => tooltip.hide(element))
       /* merge function learned from this great video by Curran Kelleher: https://www.youtube.com/watch?v=IyIAR65G-GQ */
       .attr('width', x.bandwidth())
       .attr('height', 0)
-      .attr('x', d => x(d.name))
-      .attr('y', d => this.height() - this.margin.bottom)
+      .attr('x', d => x(d['key']))
+      .attr('y', d => 0)
       .attr('width', x.bandwidth())
       .style('fill', (d, i) => color(i))
       .merge(rect)
       .transition()
       .duration(500)
-      .delay((d, i, all) => i * (Math.round(100 / all.length) + 1))
-      .attr('y', d => y(d.value))
-      .attr('height', d => y(0) - y(d.value))
-
+      .attr('y', d => y(d[0][1]))
+      .attr('height', d => y(d[0][0]) - y(d[0][1]))
+    //
     rect
       .exit()
       .transition()

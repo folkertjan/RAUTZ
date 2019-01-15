@@ -7,10 +7,10 @@
           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </div>
         <div class="pie-holder chart">
-          <bar-chart :id="'pie-income'" :data="filtered" />
+          <stacked-bar-chart :id="'pie-income'" :data="filtered" />
         </div>
         <div class="pie-holder chart">
-          <bar-chart :id="'pie-income-split'" :data="splitdata" />
+          <stacked-bar-chart :id="'pie-income-split'" :data="splitdata" />
         </div>
       </div>
       <button class="btn" @click="toggleSplit">split</button>
@@ -21,12 +21,12 @@
 <script>
 import store from '@/store.js'
 // import PieChart from '@/components/charts/PieChart.vue'
-import BarChart from '@/components/charts/BarChart.vue'
+import StackedBarChart from '@/components/charts/StackedBarChart.vue'
 import format from '@/modules/format.js'
 export default {
   components: {
     // PieChart
-    BarChart
+    StackedBarChart
   },
   data() {
     return {
@@ -43,7 +43,7 @@ export default {
       ) {
         const data =
           mutation.type === 'updateFarmers' ? state.farmers : state.filtered
-        this.filtered = format.income(data)
+        this.filtered = format.incomeStack(data)
         console.log(this.filtered)
         // .sort((a, b) => a['value'] - b['value'])
       }
@@ -51,6 +51,7 @@ export default {
   },
   methods: {
     toggleSplit: function() {
+      store.commit('toggleSplit')
       this.splitdata = this.split ? [] : this.filtered
       this.split = !this.split
     }

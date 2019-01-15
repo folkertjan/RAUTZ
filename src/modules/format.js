@@ -54,4 +54,16 @@ const income = data => {
   )
 }
 
-export default { data, income }
+const incomeStack = data => {
+  const reform = {
+    cocoa: Math.round(d3.mean(data.map(farmer => Number(farmer.hh_income_perc_cocoa) === NaN ? 0 : Number(farmer.hh_income_perc_cocoa))) * 100),
+    othercrops: Math.round(d3.mean(data.map(farmer => Number(farmer.hh_income_perc_othercrops) === NaN ? 0 : Number(farmer.hh_income_perc_othercrops))) * 100),
+    livestock: Math.round(d3.mean(data.map(farmer => Number(farmer.hh_income_perc_livestock) === NaN ? 0 : Number(farmer.hh_income_perc_livestock))) * 100),
+    smallbusiness: Math.round(d3.mean(data.map(farmer => Number(farmer.hh_income_perc_smallbusiness) === NaN ? 0 : Number(farmer.hh_income_perc_smallbusiness))) * 100)
+  }
+  const rest = reform['cocoa'] + reform['othercrops'] + reform['livestock'] + reform['smallbusiness']
+  reform['other'] = 100 - rest
+  return [reform]
+}
+
+export default { data, income, incomeStack}

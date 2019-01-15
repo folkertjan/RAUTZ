@@ -1,14 +1,14 @@
 <template lang="html">
   <div class="sidebar-holder" :class="open ? 'open' : ''">
-    <button id="toggle" @click="toggle">{{open ? 'close sidebar' : 'open sidebar'}}</button>
+    <button id="toggle" @click="toggle">{{open ? 'Close filters' : 'Change filters'}}</button>
     <div id="counter">
       <p>Farmers in selection: <span>{{ total }}</span></p>
     </div>
     <div id="sidebar" :class="split ? 'split' : ''">
       <nav>
         <ul>
-          <li><button type="button" @click="toggleSplit" name="button">All</button></li>
-          <li><button type="button" @click="toggleSplit" name="button">Split</button></li>
+          <li><button :class="split ? '' : 'active'" type="button" @click="toggleNav" name="button">All</button></li>
+          <li><button :class="split ? 'active' : ''" type="button" @click="toggleNav" name="button">Split</button></li>
         </ul>
       </nav>
       <div class="form-holder main">
@@ -40,6 +40,14 @@ export default {
       return store.state.total
     }
   },
+  mounted() {
+    this.split = store.state.split
+    store.subscribe((mutation, state) => {
+      if (mutation.type === 'toggleSplit') {
+        this.split = state.split
+      }
+    })
+  },
   data() {
     return {
       open: false,
@@ -49,8 +57,9 @@ export default {
   methods: {
     toggle: function() {
       this.open = !this.open
+      store.commit('toggleSidebar')
     },
-    toggleSplit: function() {
+    toggleNav: function() {
       this.split = !this.split
     }
   }
@@ -76,11 +85,14 @@ export default {
     }
   }
   .form-holder {
-    padding: 3rem 1rem;
+    padding: 6rem 1rem;
     min-width: 100%;
     transition: all 0.5s;
     &.secondary {
       background: goldenrod;
+      h2 {
+        color: lightgrey;
+      }
     }
   }
   nav {
@@ -97,6 +109,18 @@ export default {
         flex-grow: 1;
         button {
           width: 100%;
+          &.active {
+            border-color: lightgrey;
+            background-color: lightgrey;
+          }
+        }
+        &:last-of-type {
+          button {
+            &.active {
+              background-color: goldenrod;
+              border-color: goldenrod;
+            }
+          }
         }
       }
     }
