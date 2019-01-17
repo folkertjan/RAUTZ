@@ -1,35 +1,35 @@
 <template lang="html">
   <div :class="type == 'radio' ? 'input-label-holder radio' : 'input-label-holder'">
-    <label v-if="type != 'radio'" :for="'input-'+uniqueID">{{ text }}</label>
-    <input @change="filter.update" :type="type" :name="name" :id="'input-'+uniqueID" :class="'input-'+name" :value="value" :checked="checked">
-    <label v-if="type == 'radio'" :for="'input-'+uniqueID">{{ text }}</label>
+    <label v-if="type != 'radio'" :for="'input-'+split+uniqueID">{{ text }}</label>
+    <input @change="onChange" :type="type" :name="name" :id="'input-'+split+uniqueID" :class="'input-'+name" :value="value" :checked="checked">
+    <label v-if="type == 'radio'" :for="'input-'+split+uniqueID">{{ text }}</label>
   </div>
 </template>
 
 <script>
-import filter from '@/modules/filter.js'
 import store from '@/store.js'
-import calculations from '@/modules/calculations.js'
 
 export default {
-  data() {
-    return {
-      filter: filter
-    }
-  },
-  props: ['name', 'text', 'value', 'type', 'checked'],
+  props: ['name', 'text', 'value', 'type', 'checked', 'split'],
   computed: {
     uniqueID() {
       return this._uid
     }
   },
+  methods: {
+    onChange: function(e) {
+      this.$emit('changed', e)
+    }
+  },
   mounted() {
     store.subscribe((mutation, state) => {
-      if (mutation.type === 'updateFilters') {
+      if (mutation.type === 'updateFilters' && !this.split) {
         const filters = state.filters
         if (filters[this.name] == this.value) {
           document.querySelector('#input-' + this.uniqueID).checked = true
         }
+      } else if (this.split) {
+        console.log('splitbar')
       }
     })
   }

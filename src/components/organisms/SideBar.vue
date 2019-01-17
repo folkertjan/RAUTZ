@@ -18,8 +18,7 @@
       </div>
       <div class="form-holder secondary">
         <h2>Secondary</h2>
-        <form-farmer />
-        <form-land />
+        <form-split />
       </div>
     </div>
   </div>
@@ -30,10 +29,12 @@
 import store from '@/store.js'
 import FormFarmer from '@/components/forms/FormFarmer.vue'
 import FormLand from '@/components/forms/FormLand.vue'
+import FormSplit from '@/components/forms/FormSplit.vue'
 export default {
   components: {
     FormFarmer,
-    FormLand
+    FormLand,
+    FormSplit
   },
   computed: {
     total() {

@@ -6,11 +6,11 @@
         <div class="content">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </div>
-        <div class="pie-holder chart">
-          <stacked-bar-chart :id="'pie-income'" :data="filtered" />
+        <div class="chart">
+          <stacked-bar-chart :id="'bar-income'" :data="farmers" :factor="1.2" :perc="0.475"/>
         </div>
-        <div class="pie-holder chart">
-          <stacked-bar-chart :id="'pie-income-split'" :data="splitdata" />
+        <div class="chart">
+          <stacked-bar-chart :id="'bar-income-split'" :data="splitdata" :factor="1.2" :perc="0.475"/>
         </div>
       </div>
       <button class="btn" @click="toggleSplit">split</button>
@@ -30,7 +30,7 @@ export default {
   },
   data() {
     return {
-      filtered: [],
+      farmers: [],
       split: false,
       splitdata: []
     }
@@ -43,16 +43,14 @@ export default {
       ) {
         const data =
           mutation.type === 'updateFarmers' ? state.farmers : state.filtered
-        this.filtered = format.incomeStack(data)
-        console.log(this.filtered)
-        // .sort((a, b) => a['value'] - b['value'])
+        this.farmers = format.incomeStack(data)
       }
     })
   },
   methods: {
     toggleSplit: function() {
       store.commit('toggleSplit')
-      this.splitdata = this.split ? [] : this.filtered
+      this.splitdata = this.split ? [] : this.farmers
       this.split = !this.split
     }
   }

@@ -1,7 +1,6 @@
 import store from '@/store.js'
 
-const update = e =>
-  store.commit({
+const update = e => store.commit({
     type: 'updateFilters',
     value: e.target.value,
     operator: e.target.dataset.operator,

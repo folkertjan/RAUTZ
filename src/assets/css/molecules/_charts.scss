@@ -18,34 +18,49 @@
   position: relative;
   display: flex;
   align-items: center;
-}
-.content {
-  min-width: 50%;
-  transition: all 0.5s;
-  opacity: 1;
-  white-space: normal;
-  overflow: hidden;
-  padding: 2rem;
-}
-.chart {
-  padding: 2rem;
-  position: relative;
-  min-width: 50%;
-  display: inline-flex;
-  justify-content: center;
-  transition: all 0.5s;
-  &:last-of-type {
-    opacity: 0;
-  }
-}
-.split {
-  .chart {
-    min-width: 50%;
-    opacity: 1;
-    transform: translateX(-100%);
-  }
   .content {
-    opacity: 0;
-    transform: translateX(-100%);
+    min-width: 50%;
+    transition: all 0.5s;
+    opacity: 1;
+    white-space: normal;
+    overflow: hidden;
+    padding: 2rem;
+  }
+  .chart {
+    padding: 2rem;
+    position: relative;
+    min-width: 50%;
+    width: 50%;
+    display: inline-flex;
+    justify-content: center;
+    transition: all 0.5s;
+    .bar {
+      width: 100%;
+    }
+    &:last-of-type {
+      opacity: 0;
+    }
+  }
+  &.full-width {
+    .chart {
+      min-width: 100%;
+    }
+  }
+  &.split {
+    .chart {
+      min-width: 50%;
+      max-width: 50%;
+      opacity: 1;
+      transform: translateX(-100%);
+    }
+    .content {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    &.full-width {
+      .chart {
+        transform: translateX(0);
+      }
+    }
   }
 }

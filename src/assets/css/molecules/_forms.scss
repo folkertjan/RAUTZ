@@ -2,7 +2,6 @@ form {
   fieldset {
     margin: 2rem 0;
     padding: 2rem 1rem;
-    max-width: 20rem;
     border: 0;
   }
   legend {
@@ -37,12 +36,12 @@ form {
       display: inline-block;
       &::after {
         opacity: 0;
-        width: 0.5rem;
-        height: 0.5rem;
+        width: 0.75rem;
+        height: 0.75rem;
         border-radius: 50%;
-        top: 0.36rem;
-        left: 0.25rem;
-        background: $color-dark;
+        top: 0.2375rem;
+        left: 0.125rem;
+        background: $color-heading;
         content: "";
         position: absolute;
         transition: all 0.3s ease-in-out;
@@ -76,6 +75,44 @@ form {
     margin: 1rem 0;
     &:first-of-type {
       margin-top:0;
+    }
+  }
+}
+
+
+#farmer {
+  .form-holder {
+    .fieldset-input-holder {
+      display: grid;
+      grid-template-columns: repeat(2, auto);
+      .input-certified {
+        padding-top: 2rem;
+        .input-group {
+          display: flex;
+          align-items: center;
+          .radio {
+            margin-right: 1rem;
+            &:first-of-type {
+              margin-top: 1rem;
+            }
+          }
+        }
+      }
+      .input-sex {
+        display: flex;
+        flex-grow: 1;
+        .input-group {
+          padding: 1rem;
+          display: flex;
+          align-items: center;
+          .radio {
+            margin-right: 1rem;
+            &:first-of-type {
+              margin-top: 1rem;
+            }
+          }
+        }
+      }
     }
   }
 }

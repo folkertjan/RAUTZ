@@ -3,7 +3,7 @@ section {
   padding: 6rem 0;
   background-color: $color-section-light;
   color: $color-font-dark;
-  &:nth-of-type(odd){
+  &:nth-of-type(even){
     background-color: $color-section-dark;
     color: $color-font-light;
   }

@@ -3,10 +3,13 @@ import tooltip from '@/modules/d3/tooltip.js'
 import helper from '@/modules/d3/helper.js'
 
 const bar = {
-  margin: { top: 20, right: 25, bottom: 100, left: 25 },
+  margin: { top: 20, right: 35, bottom: 100, left: 35 },
 
-  draw(element, data) {
+  draw(element, data, factor, perc) {
     const chart = d3.select(`#${element}`)
+    const bounds = this.bounds(factor, perc)
+    const width = bounds.width
+    const height = bounds.height
 
     chart
       .append('div')
@@ -16,8 +19,8 @@ const bar = {
 
     const svg = chart
       .append('svg')
-      .attr('width', this.width())
-      .attr('height', this.height())
+      .attr('width', width)
+      .attr('height', height)
 
     const axis = svg.append('g').classed('axis', true)
 
@@ -36,8 +39,8 @@ const bar = {
       .append('text')
       .attr(
         'transform',
-        `rotate(90) translate(${this.height() - this.margin.bottom / 2}, ${0 -
-          this.width()})`
+        `rotate(90) translate(${height - this.margin.bottom / 2}, ${0 -
+          width})`
       )
       .attr('dy', '0.75em')
       .style('text-anchor', 'middle')
@@ -48,7 +51,7 @@ const bar = {
       .attr(
         'transform',
         `rotate(-90) translate(${0 -
-          this.height() / 2 +
+          height / 2 +
           this.margin.bottom / 2}, ${10})`
       )
       .attr('dy', '0.75em')
@@ -58,30 +61,29 @@ const bar = {
 
     svg.append('g')
       .classed('parent', true)
-      .attr('transform', `translate(${this.margin.left * 2},0)`)
+      // .attr('transform', `translate(${this.margin.left * 2},0)`)
 
-    this.update(element, data)
+    this.update(element, data, factor, perc)
   },
 
-  update(element, data) {
+  update(element, data, factor, perc) {
     if (!data || data.length === 0) {
       return
     }
+    const bounds = this.bounds(factor, perc)
+    const width = bounds.width
+    const height = bounds.height
+
+    const keys = Object.keys(data.values[0])
+    const index = keys.indexOf('total')
+    if (index !== -1) keys.splice(index, 1)
+
     const stack = d3.stack()
-      .keys(Object.keys(data[0]))
+      .keys(keys)
 
-    console.log('fired');
-
-    const stacked = stack(data)
+    const stacked = stack(data.values)
 
     const color = helper.color(stacked)
-
-    const svg = d3.select(`#${element} svg`)
-
-    d3.select(`#${element}`)
-      .attr('width', this.width())
-      .attr('height', this.height())
-    svg.attr('width', this.width()).attr('height', this.height())
 
     /*
 		=== Start source ===
@@ -94,32 +96,35 @@ const bar = {
 
     const x = d3
       .scaleBand()
-      .domain(['income'])
-      .range([this.margin.left, this.width() - this.margin.right])
+      .domain(data.domain)
+      .range([this.margin.left, width - this.margin.right])
       .padding(0.1)
 
     const y = d3
       .scaleLinear()
-      .domain([0, 100]) //d3.max(data, d => d.value)
+      .domain([0, data.values[0].total]) //d3.max(data, d => d.value)
       .nice()
-      .range([this.height() - this.margin.bottom, this.margin.top])
+      .range([height - this.margin.bottom, this.margin.top])
 
     const xAxis = g =>
       g
-        .attr('transform', `translate(0,${this.height() - this.margin.bottom})`)
+        .attr('transform', `translate(0,${height - this.margin.bottom})`)
         .call(d3.axisBottom(x).tickSizeOuter(0))
         .selectAll('text')
-        .attr('y', 0)
-        .attr('x', 10)
+        .attr('y', 20)
+        .attr('x', 0)
         .attr('dy', '.35em')
-        .attr('transform', 'rotate(90)')
-        .style('text-anchor', 'start')
+        // .attr('transform', 'rotate(90)')
+        .style('text-anchor', 'center')
 
     const yAxis = g =>
       g
         .attr('transform', `translate(${this.margin.left},0)`)
         .call(d3.axisLeft(y))
         .call(g => g.select('.domain').remove())
+
+    const svg = d3.select(`#${element} svg`)
+
 
     svg.select('.xAxis').call(xAxis)
 
@@ -128,27 +133,39 @@ const bar = {
 
     const chart = d3.select(`#${element} .parent`)
 
-    const rect = chart.selectAll('rect').data(stacked)
+    const group = chart
+      .selectAll('g')
+      .data(stacked, d=>d)
+
+    const ready = group
+      .enter()
+      .append('g')
+      .style('fill', (d, i) => color(i))
+      .attr('title', d => d['key'])
+
+    group
+      .exit()
+      .remove()
+
+    const rect = ready
+      .selectAll('rect')
+      .data(d => d)
 
     rect
       .enter()
       .append('rect')
-      .attr('title', (d, i) => d['key'])
-      .on('mouseover', d => tooltip.show(element, `${d.key}: ${d[0][1] - d[0][0]}`))
+      .on('mouseover', (d, i, all) => tooltip.show(element, `${all[i].parentNode.getAttribute('title')}: ${d[1] - d[0]}`))
       .on('mouseout', () => tooltip.hide(element))
-      /* merge function learned from this great video by Curran Kelleher: https://www.youtube.com/watch?v=IyIAR65G-GQ */
       .attr('width', x.bandwidth())
-      .attr('height', 0)
-      .attr('x', d => x(d['key']))
-      .attr('y', d => 0)
-      .attr('width', x.bandwidth())
-      .style('fill', (d, i) => color(i))
+      .attr('x', (d, i) => x(data.domain[i]))
+      .attr('y', d => y(d[1]))
+      .attr('height', d => y(d[0]) - y(d[1]))
       .merge(rect)
       .transition()
       .duration(500)
-      .attr('y', d => y(d[0][1]))
-      .attr('height', d => y(d[0][0]) - y(d[0][1]))
-    //
+      .attr('y', d => y(d[1]))
+      .attr('height', d => y(d[0]) - y(d[1]))
+
     rect
       .exit()
       .transition()
@@ -157,13 +174,12 @@ const bar = {
       .attr('y', d => this.height() - this.margin.bottom)
       .remove()
   },
+  bounds(factor, perc) {
+    console.log(factor, perc)
+    const scrwidth = document.querySelector('#landing .container').offsetWidth
+    let width = scrwidth * perc
+    return {width, height: width * factor}
 
-  height() {
-    return this.width() * 1.25
-  },
-
-  width() {
-    return window.innerWidth / 3 > 500 ? 500 : window.innerWidth / 3
   }
 }
 

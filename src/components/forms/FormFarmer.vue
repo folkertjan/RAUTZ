@@ -1,35 +1,49 @@
 <template lang="html">
-  <form id="form-farmer">
+  <form class="form-farmer">
     <fieldset>
       <legend>Head farmer</legend>
-      <p>Select sex</p>
-      <div class="input-group">
-        <input-label name="head_gender" text="Any" value="" type="radio" checked="true"></input-label>
-        <input-label name="head_gender" text="Male" value="1" type="radio"></input-label>
-        <input-label name="head_gender" text="Female" value="2" type="radio"></input-label>
-      </div>
-      <p>Selling certified cocoa or not?</p>
-      <div class="input-group">
-        <input-label name="cocoa_certification_yn" text="Any" value="" type="radio" checked="true"></input-label>
-        <input-label name="cocoa_certification_yn" text="No" value="0" type="radio"></input-label>
-        <input-label name="cocoa_certification_yn" text="Yes" value="1" type="radio"></input-label>
-      </div>
-      <p>Education level</p>
-      <div class="input-group">
-        <select-label name="head_education" operator="><" steps="3" text="Select education level" :values="edulevel"></select-label>
+      <div class="fieldset-input-holder">
+        <div class="input-sex">
+          <div>
+            <p>Gender farmer</p>
+            <img src="https://unsplash.it/200/300">
+          </div>
+          <div class="input-group">
+            <input-label @changed="filter.update" split='' name="head_gender" text="Any" value="" type="radio" checked="true"></input-label>
+            <input-label @changed="filter.update" split='' name="head_gender" text="Male" value="1" type="radio"></input-label>
+            <input-label @changed="filter.update" split='' name="head_gender" text="Female" value="2" type="radio"></input-label>
+          </div>
+        </div>
+        <div class="input-education">
+          <p>Education level</p>
+          <div class="input-group">
+            <select-label @changed="filter.update" split='' name="head_education" operator="><" steps="3" text="Select education level" :values="edulevel"></select-label>
+          </div>
+        </div>
+        <div class="input-certified">
+          <p>Certification?</p>
+          <div class="input-group">
+            <input-label @changed="filter.update" split='' name="cocoa_certification_yn" text="Any" value="" type="radio" checked="true"></input-label>
+            <input-label @changed="filter.update" split='' name="cocoa_certification_yn" text="No" value="0" type="radio"></input-label>
+            <input-label @changed="filter.update" split='' name="cocoa_certification_yn" text="Yes" value="1" type="radio"></input-label>
+          </div>
+        </div>
       </div>
     </fieldset>
     <fieldset>
       <legend>Household</legend>
-      <p>Household size</p>
-      <div class="input-group">
-        <select-label name="hhmem_number" operator="<=" text="Select amount of people in household" :values="householdsize"></select-label>
+      <div class="input-household">
+        <p>Household size</p>
+        <div class="input-group">
+          <select-label @changed="filter.update" split='' name="hhmem_number" operator="<=" text="Select amount of people in household" :values="householdsize"></select-label>
+        </div>
       </div>
     </fieldset>
   </form>
 </template>
 
 <script>
+import filter from '@/modules/filter.js'
 import InputLabel from '@/components/forms/InputLabel.vue'
 import SelectLabel from '@/components/forms/SelectLabel.vue'
 export default {
@@ -39,6 +53,7 @@ export default {
   },
   data() {
     return {
+      filter: filter,
       householdsize: [
         {
           label: 'Up to 5',
