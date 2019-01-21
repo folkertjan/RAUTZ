@@ -22,7 +22,7 @@ form {
     border: none;
     padding: 0.5rem 0.75rem;
   }
-  input[type="radio"] {
+  input[type="radio"], input[type="checkbox"] {
     appearance: none;
     background: $color-white;
     border-radius: 50%;
@@ -57,10 +57,18 @@ form {
 
     }
   }
+  input[type="checkbox"] {
+    border-radius: 0;
+    +label {
+      &::after {
+        border-radius: 0;
+      }
+    }
+  }
 }
 .input-group {
   .input-label-holder {
-    &.radio {
+    &.radio, &.check {
       display: flex;
       align-items: center;
       position: relative;
@@ -73,43 +81,48 @@ form {
     }
     text-align: left;
     margin: 1rem 0;
-    &:first-of-type {
-      margin-top:0;
-    }
   }
 }
 
 
 #farmer {
   .form-holder {
+    .input-household {
+      border-top: 3px solid $color-white-muddy;
+      padding-top: 3rem;
+    }
     .fieldset-input-holder {
       display: grid;
       grid-template-columns: repeat(2, auto);
+      > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        &:nth-of-type(odd){
+          border-right: 3px solid $color-white-muddy;
+        }
+      }
       .input-certified {
         padding-top: 2rem;
         .input-group {
           display: flex;
           align-items: center;
-          .radio {
+          .radio, .check {
             margin-right: 1rem;
-            &:first-of-type {
-              margin-top: 1rem;
-            }
           }
         }
       }
       .input-sex {
         display: flex;
+        flex-direction: row;
         flex-grow: 1;
         .input-group {
           padding: 1rem;
           display: flex;
           align-items: center;
-          .radio {
+          .radio, .check {
             margin-right: 1rem;
-            &:first-of-type {
-              margin-top: 1rem;
-            }
           }
         }
       }

@@ -110,13 +110,19 @@ html::-webkit-scrollbar {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.hide-text {
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
 h1, h2, h3, h4 {
   letter-spacing: 0.05em;
   color: $color-heading;
   font-family: $font-heading;
+  font-size: 3rem!important;
 }
 p, li, figcaption, label, input, textarea, a, legend {
-  font-size: 1rem;
+  font-size: 1.25rem;
   letter-spacing: 0.075em;
   font-family: $font-regular;
 }

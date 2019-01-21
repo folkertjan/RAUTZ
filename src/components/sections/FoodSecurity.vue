@@ -3,7 +3,9 @@
     <div class="container">
       <h2>Food security</h2>
       <div class="content">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
       </div>
       <div :class="split ? 'split split-holder full-width' : 'split-holder full-width'">
 
@@ -11,10 +13,10 @@
           <stacked-bar-chart :id="'bar-foodsec'" :data="farmers" :factor="0.55" :perc="size"/>
         </div>
         <div class="chart">
-          <stacked-bar-chart :id="'bar-foodsec-split'" :data="splitdata" :factor="0.55" :perc="0.475"/>
+          <stacked-bar-chart :id="'bar-foodsec-split'" :data="splitdata" :factor="0.55" :perc="0.5"/>
         </div>
       </div>
-      <button class="btn" @click="toggleSplit">split</button>
+      <button class="btn" @click="toggleSplit">Compare</button>
     </div>
     </div>
   </section>
@@ -54,7 +56,7 @@ export default {
       store.commit('toggleSplit')
       this.splitdata = this.split ? [] : this.farmers
       this.split = !this.split
-      this.size = this.split ? 0.45 : 1
+      this.size = this.split ? 0.5 : 1
     }
   }
 }

@@ -9,8 +9,8 @@ via http://www.jeromecukier.net/2011/08/11/d3-scales-and-color/
 const color = data =>
   d3
     .scaleLinear()
-    .domain([0, Math.round(data.length / 2), data.length])
-    .range(['#618058', '#b5e2e1', '#e68577'])
+    .domain([0, data.length])
+    .range(['#e68577','#b5e2e1'])
 /* === End source === */
 
 export default { color }

@@ -4,7 +4,9 @@
       <h2>Income</h2>
       <div :class="split ? 'split split-holder' : 'split-holder'">
         <div class="content">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
         </div>
         <div class="chart">
           <stacked-bar-chart :id="'bar-income'" :data="farmers" :factor="1.2" :perc="0.475"/>
@@ -13,7 +15,7 @@
           <stacked-bar-chart :id="'bar-income-split'" :data="splitdata" :factor="1.2" :perc="0.475"/>
         </div>
       </div>
-      <button class="btn" @click="toggleSplit">split</button>
+      <button class="btn" @click="toggleSplit">Compare</button>
     </div>
   </section>
 </template>

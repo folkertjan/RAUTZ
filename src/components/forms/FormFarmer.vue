@@ -1,7 +1,7 @@
 <template lang="html">
   <form class="form-farmer">
     <fieldset>
-      <legend>Head farmer</legend>
+      <legend class="hide-text">Head farmer</legend>
       <div class="fieldset-input-holder">
         <div class="input-sex">
           <div>
@@ -9,9 +9,8 @@
             <img src="https://unsplash.it/200/300">
           </div>
           <div class="input-group">
-            <input-label @changed="filter.update" split='' name="head_gender" text="Any" value="" type="radio" checked="true"></input-label>
-            <input-label @changed="filter.update" split='' name="head_gender" text="Male" value="1" type="radio"></input-label>
-            <input-label @changed="filter.update" split='' name="head_gender" text="Female" value="2" type="radio"></input-label>
+            <input-label @changed="filter.update" split='' name="head_gender" text="Male" value="1" type="checkbox"></input-label>
+            <input-label @changed="filter.update" split='' name="head_gender" text="Female" value="2" type="checkbox"></input-label>
           </div>
         </div>
         <div class="input-education">
@@ -23,15 +22,14 @@
         <div class="input-certified">
           <p>Certification?</p>
           <div class="input-group">
-            <input-label @changed="filter.update" split='' name="cocoa_certification_yn" text="Any" value="" type="radio" checked="true"></input-label>
-            <input-label @changed="filter.update" split='' name="cocoa_certification_yn" text="No" value="0" type="radio"></input-label>
-            <input-label @changed="filter.update" split='' name="cocoa_certification_yn" text="Yes" value="1" type="radio"></input-label>
+            <input-label @changed="filter.update" split='' name="cocoa_certification_yn" text="Yes" value="1" type="checkbox"></input-label>
+            <input-label @changed="filter.update" split='' name="cocoa_certification_yn" text="No" value="0" type="checkbox"></input-label>
           </div>
         </div>
       </div>
     </fieldset>
     <fieldset>
-      <legend>Household</legend>
+      <legend class="hide-text">Household</legend>
       <div class="input-household">
         <p>Household size</p>
         <div class="input-group">

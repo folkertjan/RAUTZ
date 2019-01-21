@@ -5,7 +5,8 @@ const update = e => store.commit({
     value: e.target.value,
     operator: e.target.dataset.operator,
     steps: e.target.dataset.steps,
-    name: e.target.name
+    name: e.target.name,
+    element: e.target.type
   })
 
 const all = (arr, filters) => {
@@ -13,11 +14,19 @@ const all = (arr, filters) => {
   return arr.filter(obj => {
     return keys.every(key => {
       if (typeof filters[key] != 'object') {
+        // single value
         if (!filters[key].length || filters[key] === 'any') {
           return true
         }
         return filters[key].includes(obj[key])
+      } else if (filters[key].length >= 0) {
+        // array
+        if (filters[key].length === 0) {
+          return true
+        }
+        return filters[key].indexOf(obj[key]) > -1
       }
+      // object
       let check
       let objVal = obj[key]
       let { operator, value, steps } = filters[key]

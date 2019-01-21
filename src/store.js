@@ -21,7 +21,18 @@ export default new Vuex.Store({
       state.total = payload.value.length
     },
     updateFilters(state, payload) {
-      if (payload.operator) {
+      if (payload.element == 'checkbox') {
+        if (!state.filters[payload.name]) {
+          state.filters[payload.name] = []
+        }
+        let index = state.filters[payload.name].indexOf(payload.value)
+        if (index > -1) {
+          state.filters[payload.name].splice(index, 1);
+        } else {
+          state.filters[payload.name].push(payload.value)
+        }
+        console.log(state.filters[payload.name].length)
+      } else if (payload.operator) {
         state.filters[payload.name] = {
           operator: payload.operator,
           value: payload.value,

@@ -1,7 +1,7 @@
 <template lang="html">
-  <section id="food-diversity">
+  <section id="plant-nutrients">
     <div class="container">
-      <h2>Food Diversity</h2>
+      <h2>Plant Nutrients and Pesticides</h2>
     </div>
   </section>
 </template>

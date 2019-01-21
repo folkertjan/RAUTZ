@@ -9,8 +9,8 @@
       <landing />
       <farmer />
       <land />
+      <plant-nutrients />
       <income />
-      <food-diversity />
       <food-security />
       <site-summary />
     </div>
@@ -25,7 +25,7 @@ import Landing from '@/components/sections/Landing.vue'
 import Farmer from '@/components/sections/Farmer.vue'
 import Land from '@/components/sections/Land.vue'
 import Income from '@/components/sections/Income.vue'
-import FoodDiversity from '@/components/sections/FoodDiversity.vue'
+import PlantNutrients from '@/components/sections/PlantNutrients.vue'
 import FoodSecurity from '@/components/sections/FoodSecurity.vue'
 import SiteSummary from '@/components/sections/SiteSummary.vue'
 
@@ -35,8 +35,8 @@ export default {
     Landing,
     Farmer,
     Land,
+    PlantNutrients,
     Income,
-    FoodDiversity,
     FoodSecurity,
     SiteSummary
   },
