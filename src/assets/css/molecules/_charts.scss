@@ -1,3 +1,93 @@
+.counter {
+  transition: all 0.3s ease-out;
+  span {
+    font-weight: bold;
+  }
+}
+svg {
+  text {
+    font-size: 1rem;
+    font-family: $font-regular;
+    fill: $color-white;
+  }
+  .axis {
+    .xAxis {
+      text {
+        font-size: 0.875rem;
+        font-weight: 700;
+      }
+    }
+    .yAxis {
+      text {
+        font-size: 1rem;
+      }
+    }
+
+  }
+}
+.light-bg {
+  svg {
+    text {
+      fill: $color-font-dark;
+    }
+    path {
+      stroke: $color-font-dark;
+    }
+  }
+}
+.split {
+  +.splitbtn {
+    &::before, &::after {
+      // opacity: 0;
+      transform: translate(-50%, calc(-50% - 10px)) rotate(180deg);
+    }
+  }
+}
+.splitbtn {
+  margin-left: auto;
+  display: block;
+  border: 0;
+  border-radius: 10px;
+  position: relative;
+  color: $color-dark;
+  overflow: hidden;
+  width: 100px;
+  height: 60px;
+  padding: 0 0 .75rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 700;
+  justify-content: flex-end;
+  font-size: 0.75rem;
+  &::before, &::after {
+    opacity: 1;
+    display: block;
+    content: "";
+    width: 40px;
+    height: 8px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transition: all 0.3s;
+    transform: translate(-50%, calc(-50% - 15px)) rotate(180deg);
+    background-image: url('/images/arrow.svg');
+  }
+  &::after {
+    transform: translate(-50%, calc(-50% - 5px));
+  }
+  &:focus {
+    outline: none;
+    background-color: darken($color-grey, 20%);
+  }
+  &:hover {
+    color: $color-dark;
+    background-color: darken($color-grey, 20%);
+  }
+}
 .tooltip {
   display: table;
   background: rgba(0,0,0,0.8);
@@ -6,7 +96,7 @@
   position: fixed;
   h4 {
     font-family: $font-regular;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     color: $color-font-light;
     margin: 0;
     font-weight: normal;
@@ -17,25 +107,32 @@
   white-space: nowrap;
   position: relative;
   display: flex;
-  align-items: center;
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
   .content {
     min-width: 50%;
     transition: all 0.5s;
     opacity: 1;
     white-space: normal;
     overflow: hidden;
-    padding: 2rem;
+    padding-right: 5rem;
   }
   .chart {
-    padding: 2rem;
     position: relative;
     min-width: 50%;
     width: 50%;
     display: inline-flex;
-    justify-content: center;
     transition: all 0.5s;
+    flex-direction: column;
+    align-items: center;
     .bar {
       width: 100%;
+    }
+    &.center {
+      .bar {
+        display: flex;
+        justify-content: center;
+      }
     }
     &:last-of-type {
       opacity: 0;

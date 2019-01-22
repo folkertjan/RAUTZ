@@ -1,10 +1,45 @@
 section {
   min-height: 100vh;
-  padding: 6rem 0;
+  padding: 10rem 0 14rem;
   background-color: $color-section-light;
   color: $color-font-dark;
+  position: relative;
+  .container {
+    z-index: 1;
+  }
+  .leaf {
+    display: block;
+    content: "";
+    min-width: 10rem;
+    min-height: 10rem;
+    background-image: url('/images/leaves/leaf-1-green.svg');
+    position: absolute;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 3;
+  }
+  &::before {
+    display: block;
+    content: "";
+    width: 300%;
+    transform: translate(-50%, 0) rotate(-1deg);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 3rem;
+    pointer-events: none;
+    z-index: 1;
+    background-color: $color-section-light;
+  }
   &:nth-of-type(even){
     background-color: $color-section-dark;
     color: $color-font-light;
+    &::before {
+      top: -3rem;
+      transform: translate(-50%, 0) rotate(1deg);
+      background-color: $color-section-dark;
+    }
   }
 }

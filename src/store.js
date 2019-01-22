@@ -9,7 +9,9 @@ export default new Vuex.Store({
   state: {
     farmers: [],
     filtered: [],
-    filters: {},
+    filters: {
+      crops_important1: 10
+    },
     total: null,
     ids: [],
     split: false,
@@ -18,10 +20,14 @@ export default new Vuex.Store({
   mutations: {
     updateFarmers(state, payload) {
       state.farmers = payload.value
-      state.total = payload.value.length
+      state.filtered = filter.all(state.farmers, state.filters)
+      state.total = state.filtered.length
     },
     updateFilters(state, payload) {
-      if (payload.element == 'checkbox') {
+      if (payload.element == 'range') {
+        state.filters[payload.name] = [Number(payload.value[0]), Number(payload.value[1])]
+      }
+      else if (payload.element == 'checkbox') {
         if (!state.filters[payload.name]) {
           state.filters[payload.name] = []
         }
@@ -31,7 +37,6 @@ export default new Vuex.Store({
         } else {
           state.filters[payload.name].push(payload.value)
         }
-        console.log(state.filters[payload.name].length)
       } else if (payload.operator) {
         state.filters[payload.name] = {
           operator: payload.operator,
@@ -42,6 +47,7 @@ export default new Vuex.Store({
         state.filters[payload.name] = payload.value
       }
       state.filtered = filter.all(state.farmers, state.filters)
+      console.log(state.filtered[0]);
       state.total = state.filtered.length
     },
     updateTotal(state, payload) {

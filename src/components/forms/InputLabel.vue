@@ -36,7 +36,7 @@ export default {
           element.checked = true
         }
       } else if (this.split) {
-        console.log('splitbar')
+        // split bar
       }
     })
   }

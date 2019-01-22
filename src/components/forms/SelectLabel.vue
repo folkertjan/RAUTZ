@@ -43,7 +43,7 @@ export default {
           }
         }
       } else if (this.split == 'split') {
-        console.log('splitbar');
+        // split bar
       }
     })
   }

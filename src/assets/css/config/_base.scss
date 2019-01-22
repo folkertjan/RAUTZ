@@ -56,7 +56,7 @@ figure {
 }
 .container {
     width:         90%;
-    max-width:     1080px;
+    max-width:     1260px;
     margin-right:  auto;
     margin-left:   auto;
 
@@ -96,8 +96,8 @@ html::-webkit-scrollbar {
   display: none;
 }
 ::-webkit-scrollbar {
-  width: 0.375em;
-  height: 0.375em;
+  width: 0.425em;
+  height: 0.425em;
 }
 ::-webkit-scrollbar-track {
   background: $color-section-light;
@@ -105,6 +105,7 @@ html::-webkit-scrollbar {
 
 ::-webkit-scrollbar-thumb {
   background-color: $color-font-dark;
+  cursor: pointer;
 }
 #app {
   -webkit-font-smoothing: antialiased;
@@ -115,21 +116,29 @@ html::-webkit-scrollbar {
   white-space: nowrap;
   overflow: hidden;
 }
-h1, h2, h3, h4 {
+h1, h2 {
   letter-spacing: 0.05em;
   color: $color-heading;
   font-family: $font-heading;
-  font-size: 3rem!important;
+  font-size: 2.5rem;
 }
-p, li, figcaption, label, input, textarea, a, legend {
-  font-size: 1.25rem;
+h3, h4 {
+  letter-spacing: 0.05em;
+  font-size: 1.5rem;
+  color: $color-font-dark;
+  font-family: $font-regular;
+}
+p, li, figcaption, label, input, textarea, a, legend, button, text {
+  font-size: 1rem;
   letter-spacing: 0.075em;
   font-family: $font-regular;
 }
 p > a {
   font-family: inherit;
 }
-
+p {
+  max-width: 40rem;
+}
 p, figcaption {
   margin-bottom: 1.3em;
   line-height: 1.75;
@@ -143,21 +152,21 @@ h1, h2, h3, h4 {
   margin-bottom: 1.2rem;
 }
 
-h1 {
-  font-size: 2.441rem;
-}
-
-h2 {
-  font-size: 2rem;
-}
-
-h3 {
-  font-size: 1.25rem;
-}
-
-h4 {
-  font-size: 1rem;
-}
+// h1 {
+//   font-size: 2.441rem;
+// }
+//
+// h2 {
+//   font-size: 2rem;
+// }
+//
+// h3 {
+//   font-size: 1.25rem;
+// }
+//
+// h4 {
+//   font-size: 1rem;
+// }
 
 
 input {

@@ -51,7 +51,7 @@ export default {
   methods: {
     init: function() {
       this.loading = true
-      const file = '/data/data.csv'
+      const file = '/data/data_good.csv'
       format.data(file).then(data => {
         // .map(farmer => farmer.all_land_cultivated_ha)
         // .filter(value => value ? true : false)
@@ -95,7 +95,7 @@ h1 {
 main {
   transition: all 0.3s ease-out;
   &.sidebar {
-    transform: translateX(-15rem);
+    transform: translateX(-5rem);
   }
 }
 </style>

@@ -1,25 +1,26 @@
 <template lang="html">
   <form class="form-land">
-    <fieldset>
-      <legend>Crops</legend>
-      <p>Most important crop</p>
-      <div class="input-group">
-        <select-label @changed="filter.update" name="crops_important1" split='' text="Select most important crop" :values="crops"></select-label>
-      </div>
+    <div class="fieldset">
       <p>Second important crop</p>
       <div class="input-group">
         <select-label @changed="filter.update" name="crops_important2" split='' text="Select second most important crop" :values="crops"></select-label>
       </div>
-    </fieldset>
+      <p>Land size in Ha</p>
+      <div class="input-group">
+        <range-label @changed="filter.updateRange" name="all_land_owned_ha" text="" min="0" max="20" step="1" />
+      </div>
+    </div>
   </form>
 </template>
 
 <script>
 import filter from '@/modules/filter.js'
+import RangeLabel from '@/components/forms/RangeLabel.vue'
 import SelectLabel from '@/components/forms/SelectLabel.vue'
 export default {
   components: {
-    SelectLabel
+    SelectLabel,
+    RangeLabel
   },
   data() {
     return {
@@ -226,6 +227,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-</style>

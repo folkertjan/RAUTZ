@@ -3,6 +3,7 @@ $color-accent: #42b983;
 $color-white: #ffffff;
 $color-white-broken: #f5f1ea;
 $color-white-muddy: #c7bfab;
+$color-grey: lightgrey;
 $color-dark: #4a4a4a;
 $color-green: #618058;
 $color-red: #e68577;
@@ -15,3 +16,14 @@ $color-font-dark: $color-dark;
 $color-heading: $color-gold;
 $color-section-light: $color-white-broken;
 $color-section-dark: $color-green;
+
+:root {
+  --color-gold: #e0b730;
+  --color-green: #618058;
+  --color-blue: #b5e2e1;
+  --color-red: #e68577;
+  --color-dark: #4a4a4a;
+  --color-white-muddy: #c7bfab;
+  --color-white-broken: #f5f1ea;
+  --color-grey: lightgrey;
+}

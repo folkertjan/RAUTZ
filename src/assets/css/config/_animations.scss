@@ -1,0 +1,18 @@
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 1s;
+  opacity: 1;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, 1rem);
+    opacity: 0;
+  }
+}

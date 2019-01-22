@@ -3,7 +3,7 @@ import tooltip from '@/modules/d3/tooltip.js'
 import helper from '@/modules/d3/helper.js'
 
 const bar = {
-  margin: { top: 20, right: 35, bottom: 100, left: 35 },
+  margin: { top: 20, right: 40, bottom: 100, left: 40 },
 
   draw(element, data, factor, perc) {
     const chart = d3.select(`#${element}`)
@@ -83,7 +83,7 @@ const bar = {
 
     const stacked = stack(data.values)
 
-    const color = helper.color(stacked)
+    const color = helper.color(stacked, data.colors)
 
     /*
 		=== Start source ===
@@ -135,47 +135,90 @@ const bar = {
 
     const group = chart
       .selectAll('g')
-      .data(stacked, d=>d)
+      .data(stacked)
 
-    const ready = group
+    const rect = group
       .enter()
       .append('g')
-      .style('fill', (d, i) => color(i))
       .attr('title', d => d['key'])
-
-    group
-      .exit()
-      .remove()
-
-    const rect = ready
+      .style('fill', (d, i) => color(i))
+      .merge(group)
       .selectAll('rect')
-      .data(d => d)
+      .data(d=>d)
 
-    rect
+    const enterRect = rect
       .enter()
       .append('rect')
       .on('mouseover', (d, i, all) => tooltip.show(element, `${all[i].parentNode.getAttribute('title')}: ${d[1] - d[0]}`))
       .on('mouseout', () => tooltip.hide(element))
+      .attr('height', d => y(d[0]) - y(d[1]))
       .attr('width', x.bandwidth())
       .attr('x', (d, i) => x(data.domain[i]))
       .attr('y', d => y(d[1]))
-      .attr('height', d => y(d[0]) - y(d[1]))
-      .merge(rect)
-      .transition()
-      .duration(500)
-      .attr('y', d => y(d[1]))
-      .attr('height', d => y(d[0]) - y(d[1]))
 
     rect
       .exit()
       .transition()
       .duration(500)
-      .attr('height', 0)
-      .attr('y', d => this.height() - this.margin.bottom)
+      .style('opacity', 0)
       .remove()
+
+    enterRect
+      .merge(rect)
+      .transition()
+      .duration(500)
+      .attr('height', d => y(d[0]) - y(d[1]))
+      .attr('width', x.bandwidth())
+      .attr('x', (d, i) => x(data.domain[i]))
+      .attr('y', d => y(d[1]))
+
+
+    // const groupEnter = group
+    //   .enter()
+    //   .append('g')
+    //   .style('fill', (d, i) => color(i))
+    //   .attr('title', d => d['key'])
+    //
+    // group.selectAll('rect')
+    //   .transition()
+    //   .duration(500)
+    //   .attr('y', d => y(d[1]))
+    //   .attr('height', d => y(d[0]) - y(d[1]))
+    //   .attr('width', x.bandwidth())
+    //   .attr('x', (d, i) => x(data.domain[i]))
+    //
+    // group
+    //   .exit()
+    //   .remove()
+    //
+    // const rect = groupEnter
+    //   .selectAll('rect')
+    //   .data(d => d)
+    //
+    // rect
+    //   .enter()
+    //   .append('rect')
+    //   .on('mouseover', (d, i, all) => tooltip.show(element, `${all[i].parentNode.getAttribute('title')}: ${d[1] - d[0]}`))
+    //   .on('mouseout', () => tooltip.hide(element))
+    //   .attr('width', x.bandwidth())
+    //   .attr('x', (d, i) => x(data.domain[i]))
+    //   .attr('y', d => y(d[1]))
+    //   .attr('height', d => y(d[0]) - y(d[1]))
+    //   .merge(rect)
+    //   .transition()
+    //   .duration(500)
+    //   .attr('y', d => y(d[1]))
+    //   .attr('height', d => y(d[0]) - y(d[1]))
+    //
+    // rect
+    //   .exit()
+    //   .transition()
+    //   .duration(500)
+    //   .attr('height', 0)
+    //   .attr('y', d => this.height() - this.margin.bottom)
+    //   .remove()
   },
   bounds(factor, perc) {
-    console.log(factor, perc)
     const scrwidth = document.querySelector('#landing .container').offsetWidth
     let width = scrwidth * perc
     return {width, height: width * factor}

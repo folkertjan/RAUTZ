@@ -8,6 +8,12 @@ const update = e => store.commit({
     name: e.target.name,
     element: e.target.type
   })
+const updateRange = e => store.commit({
+    type: 'updateFilters',
+    value: e.value,
+    name: e.name,
+    element: 'range'
+  })
 
 const all = (arr, filters) => {
   const keys = Object.keys(filters)
@@ -24,6 +30,16 @@ const all = (arr, filters) => {
         if (filters[key].length === 0) {
           return true
         }
+        if (typeof(filters[key][0]) === 'number' && typeof(filters[key][1]) === 'number') {
+          const ranges = filters[key].sort((a, b) => a - b)
+          let value = obj[key]
+          if (obj[key].indexOf(',') > -1) {
+            value = Number(obj[key].split(',').join('.'))
+          } else {
+            value = obj[key]
+          }
+          return value >= ranges[0] && value <= ranges[1]
+        }
         return filters[key].indexOf(obj[key]) > -1
       }
       // object
@@ -36,7 +52,7 @@ const all = (arr, filters) => {
       if (!objVal.length) {
         return false
       }
-      if (Number(value) != NaN && Number(obj[key] != NaN)) {
+      if (!isNaN(Number(value)) && !isNaN(Number(obj[key]))) {
         value = Number(value)
         objVal = Number(objVal)
       }
@@ -71,4 +87,4 @@ const compare = (operator, key, val, steps) => {
   return check
 }
 
-export default { update, all }
+export default { update, updateRange, all }

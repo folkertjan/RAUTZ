@@ -1,12 +1,18 @@
 <template lang="html">
   <form class="form-farmer">
-    <fieldset>
-      <legend class="hide-text">Head farmer</legend>
+    <div class="fieldset">
       <div class="fieldset-input-holder">
         <div class="input-sex">
           <div>
-            <p>Gender farmer</p>
-            <img src="https://unsplash.it/200/300">
+            <div class="img-holder">
+              <transition-group name="fade">
+                <img :key="1" v-if="sex == 1" src="/images/farmer-man.png">
+                <img :key="2" v-if="sex == 2" src="/images/farmer-woman.png">
+                <img :key="3" v-if="sex != 1 && sex != 2" src="/images/farmer-all.png">
+              </transition-group>
+
+            </div>
+            <p>Gender</p>
           </div>
           <div class="input-group">
             <input-label @changed="filter.update" split='' name="head_gender" text="Male" value="1" type="checkbox"></input-label>
@@ -27,45 +33,36 @@
           </div>
         </div>
       </div>
-    </fieldset>
-    <fieldset>
-      <legend class="hide-text">Household</legend>
+    </div>
+
+    <div class="fieldset">
       <div class="input-household">
         <p>Household size</p>
+        <p style="font-weight: normal; font-size: 1rem;">The household size in Ghana does not necessarily mean family size. In Ghana, a household size can also be defined by different people working and living together as a group, and therefor can vary from 1 to 17 members. Use the slider to a range of the household size.</p>
         <div class="input-group">
-          <select-label @changed="filter.update" split='' name="hhmem_number" operator="<=" text="Select amount of people in household" :values="householdsize"></select-label>
+          <range-label @changed="filter.updateRange" name="hhmem_number" text="Select household size" min="1" max="17" step="1" />
         </div>
       </div>
-    </fieldset>
+    </div>
   </form>
 </template>
 
 <script>
+import store from '@/store.js'
 import filter from '@/modules/filter.js'
 import InputLabel from '@/components/forms/InputLabel.vue'
 import SelectLabel from '@/components/forms/SelectLabel.vue'
+import RangeLabel from '@/components/forms/RangeLabel.vue'
 export default {
   components: {
     InputLabel,
-    SelectLabel
+    SelectLabel,
+    RangeLabel
   },
   data() {
     return {
       filter: filter,
-      householdsize: [
-        {
-          label: 'Up to 5',
-          value: 5
-        },
-        {
-          label: 'Up to 10',
-          value: 10
-        },
-        {
-          label: 'Up to 15',
-          value: 15
-        }
-      ],
+      sex: 'both',
       edulevel: [
         {
           label: 'No formal education completed',
@@ -81,9 +78,13 @@ export default {
         }
       ]
     }
+  },
+  mounted() {
+    store.subscribe((mutation, state) => {
+      if (mutation.type === 'updateFilters') {
+        this.sex = state.filters.head_gender
+      }
+    })
   }
 }
 </script>
-
-<style lang="scss">
-</style>
