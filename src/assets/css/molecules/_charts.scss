@@ -4,6 +4,9 @@
     font-weight: bold;
   }
 }
+.svg-holder {
+  position: relative;
+}
 svg {
   text {
     font-size: 1rem;
@@ -23,6 +26,59 @@ svg {
       }
     }
 
+  }
+}
+.filter-btn {
+  align-self: flex-end;
+  border-radius: 5px;
+  // background-image: url('/images/farmer.svg');
+  background-color: var(--color-grey);
+  border: 0;
+  color: var(--color-dark);
+  white-space: nowrap;
+  overflow: hidden;
+  margin-top: 1.5rem;
+  padding: 0.75rem;
+  z-index: 4;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  align-items: center;
+  padding-right: 5rem;
+  transition: all 0.3s ease-out;
+  &::after, &::before, div {
+    width: 3rem;
+    height: 3px;
+    display: block;
+    position: absolute;
+    background-color: var(--color-dark);
+    content: "";
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.3s;
+  }
+  div {
+    z-index: 1;
+    background-color: var(--color-dark);
+    border-radius: 50%;
+    height: 7px;
+    width: 7px;
+    transform: translate(-17px, calc(-50% - 5px));
+    &:last-of-type {
+      transform: translate(-25px, calc(-50% + 5px));
+    }
+  }
+  &::after {
+    transform: translate(0, calc(-50% - 5px));
+  }
+  &::before {
+    transform: translate(0, calc(-50% + 5px));
+  }
+  &:hover {
+    background-color: darken(lightgrey, 20%);
+    color: var(--color-dark);
   }
 }
 .light-bg {
@@ -93,7 +149,8 @@ svg {
   background: rgba(0,0,0,0.8);
   padding: 0.5rem;
   border-radius: 25px;
-  position: fixed;
+  position: absolute;
+  pointer-events: none;
   h4 {
     font-family: $font-regular;
     font-size: 0.875rem;
@@ -105,7 +162,6 @@ svg {
 .split-holder {
   overflow: hidden;
   white-space: nowrap;
-  position: relative;
   display: flex;
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
@@ -118,7 +174,6 @@ svg {
     padding-right: 5rem;
   }
   .chart {
-    position: relative;
     min-width: 50%;
     width: 50%;
     display: inline-flex;
@@ -159,5 +214,38 @@ svg {
         transform: translateX(0);
       }
     }
+  }
+}
+
+.graph-edit-form-holder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba($color-dark-blue,0.7);
+  transition: all 0.3s;
+  opacity: 0;
+  z-index: -2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .graph-edit-button {
+    background-color: transparent;
+    border-color: transparent;
+    color: $color-white-broken;
+  }
+  .split-form-holder {
+    width: 30rem;
+    height: 40rem;
+    padding: 2rem;
+    overflow-y: scroll;
+    background-color: $color-dark-blue;
+    transition: all 0.3s;
+  }
+  &.open {
+    z-index: 5;
+    opacity: 1;
   }
 }

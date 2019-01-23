@@ -3,9 +3,9 @@ import tooltip from '@/modules/d3/tooltip.js'
 import helper from '@/modules/d3/helper.js'
 
 const bar = {
-  margin: { top: 20, right: 40, bottom: 100, left: 40 },
+  margin: { top: 20, right: 200, bottom: 100, left: 80 },
 
-  draw(element, data, factor, perc) {
+  draw(element, data, factor, perc, axisTitles) {
     const chart = d3.select(`#${element}`)
     const bounds = this.bounds(factor, perc)
     const width = bounds.width
@@ -22,6 +22,8 @@ const bar = {
       .attr('width', width)
       .attr('height', height)
 
+    helper.legend.createOn(svg)
+
     const axis = svg.append('g').classed('axis', true)
 
     axis.append('g').classed('xAxis', true)
@@ -35,6 +37,19 @@ const bar = {
 		https://bl.ocks.org/d3noob/23e42c8f67210ac6c678db2cd07a747e
 		Small tweaks to work with my visualisation
 		*/
+
+    axis
+      .append('text')
+      .attr(
+        'transform',
+        `rotate(-90) translate(${0 -
+          height / 2 +
+          this.margin.bottom / 2}, ${0})`
+      )
+      .attr('dy', '0.75em')
+      .style('text-anchor', 'middle')
+      .text(axisTitles[0])
+
     axis
       .append('text')
       .attr(
@@ -44,19 +59,8 @@ const bar = {
       )
       .attr('dy', '0.75em')
       .style('text-anchor', 'middle')
-      .style('font-family', 'Montserrat')
+      .text(axisTitles[1])
 
-    axis
-      .append('text')
-      .attr(
-        'transform',
-        `rotate(-90) translate(${0 -
-          height / 2 +
-          this.margin.bottom / 2}, ${10})`
-      )
-      .attr('dy', '0.75em')
-      .style('font-family', 'Montserrat')
-      .style('text-anchor', 'middle')
     /* == End source == */
 
     svg.append('g')
@@ -67,7 +71,7 @@ const bar = {
   },
 
   update(element, data, factor, perc) {
-    if (!data || data.length === 0) {
+    if (!data || !data.values || data.values.length === 0) {
       return
     }
     const bounds = this.bounds(factor, perc)
@@ -125,6 +129,8 @@ const bar = {
 
     const svg = d3.select(`#${element} svg`)
 
+    helper.legend.update(svg, stacked, color, width, height, this.margin)
+
 
     svg.select('.xAxis').call(xAxis)
 
@@ -137,11 +143,13 @@ const bar = {
       .selectAll('g')
       .data(stacked)
 
-    const rect = group
+    const groupEnter = group
       .enter()
       .append('g')
       .attr('title', d => d['key'])
       .style('fill', (d, i) => color(i))
+
+    const rect = groupEnter
       .merge(group)
       .selectAll('rect')
       .data(d=>d)
@@ -155,6 +163,7 @@ const bar = {
       .attr('width', x.bandwidth())
       .attr('x', (d, i) => x(data.domain[i]))
       .attr('y', d => y(d[1]))
+
 
     rect
       .exit()
@@ -173,50 +182,6 @@ const bar = {
       .attr('y', d => y(d[1]))
 
 
-    // const groupEnter = group
-    //   .enter()
-    //   .append('g')
-    //   .style('fill', (d, i) => color(i))
-    //   .attr('title', d => d['key'])
-    //
-    // group.selectAll('rect')
-    //   .transition()
-    //   .duration(500)
-    //   .attr('y', d => y(d[1]))
-    //   .attr('height', d => y(d[0]) - y(d[1]))
-    //   .attr('width', x.bandwidth())
-    //   .attr('x', (d, i) => x(data.domain[i]))
-    //
-    // group
-    //   .exit()
-    //   .remove()
-    //
-    // const rect = groupEnter
-    //   .selectAll('rect')
-    //   .data(d => d)
-    //
-    // rect
-    //   .enter()
-    //   .append('rect')
-    //   .on('mouseover', (d, i, all) => tooltip.show(element, `${all[i].parentNode.getAttribute('title')}: ${d[1] - d[0]}`))
-    //   .on('mouseout', () => tooltip.hide(element))
-    //   .attr('width', x.bandwidth())
-    //   .attr('x', (d, i) => x(data.domain[i]))
-    //   .attr('y', d => y(d[1]))
-    //   .attr('height', d => y(d[0]) - y(d[1]))
-    //   .merge(rect)
-    //   .transition()
-    //   .duration(500)
-    //   .attr('y', d => y(d[1]))
-    //   .attr('height', d => y(d[0]) - y(d[1]))
-    //
-    // rect
-    //   .exit()
-    //   .transition()
-    //   .duration(500)
-    //   .attr('height', 0)
-    //   .attr('y', d => this.height() - this.margin.bottom)
-    //   .remove()
   },
   bounds(factor, perc) {
     const scrwidth = document.querySelector('#landing .container').offsetWidth

@@ -115,6 +115,7 @@ form {
 .input-group {
   .input-label-holder {
     &.range {
+      padding-bottom: 5rem;
       p {
         font-size: 1rem;
         font-weight: normal;
@@ -148,7 +149,7 @@ form {
 }
 #farmer {
   .img-holder {
-    height: 20rem;
+    height: 25rem;
     width: auto;
     position: relative;
     margin-bottom: 2rem;
@@ -157,8 +158,8 @@ form {
     position: absolute;
     top: 0;
     left: 0;
-    height: 20rem;
-    max-width: 15rem;
+    height: 25rem;
+    max-width: 20rem;
     width: auto;
   }
   .form-holder {

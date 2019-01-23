@@ -1,5 +1,5 @@
 <template lang="html">
-  <header id="nav" :class="open ? 'open' : ''">
+  <header id="nav" :class="(open ? 'open ' : '') + (sidebar ? 'sidebar' : '')">
     <button @click="toggleNav" id="nav-button" type="button" name="button">{{open ? 'close' : 'menu'}}</button>
     <nav>
       <ul>
@@ -16,11 +16,13 @@
 </template>
 
 <script>
+import store from '@/store.js'
 import animation from '@/modules/animation/scroll.js'
 export default {
   data() {
     return {
-      open: false
+      open: false,
+      sidebar: false
     }
   },
   methods: {
@@ -31,6 +33,13 @@ export default {
     toggleNav: function() {
       this.open = !this.open
     }
+  },
+  mounted() {
+    store.subscribe((mutation, state) => {
+      if (mutation.type === 'toggleSidebar') {
+        this.sidebar = state.sidebar
+      }
+    })
   }
 }
 </script>
@@ -44,6 +53,10 @@ header {
   z-index: 5;
   display: flex;
   align-items: stretch;
+  transition: all 0.3s ease-out;
+  &.sidebar {
+    transform: translateX(20rem);
+  }
   #nav-button {
     padding: 0 1rem;
     border: 0;

@@ -5,6 +5,31 @@ Vue.use(Vuex)
 
 import filter from '@/modules/filter.js'
 
+const update = (state, payload, property) => {
+  if (payload.element == 'range') {
+    state[property][payload.name] = [Number(payload.value[0]), Number(payload.value[1])]
+  }
+  else if (payload.element == 'checkbox') {
+    if (!state[property][payload.name]) {
+      state[property][payload.name] = []
+    }
+    let index = state[property][payload.name].indexOf(payload.value)
+    if (index > -1) {
+      state[property][payload.name].splice(index, 1);
+    } else {
+      state[property][payload.name].push(payload.value)
+    }
+  } else if (payload.operator) {
+    state[property][payload.name] = {
+      operator: payload.operator,
+      value: payload.value,
+      steps: payload.steps
+    }
+  } else {
+    state[property][payload.name] = payload.value
+  }
+}
+
 export default new Vuex.Store({
   state: {
     farmers: [],
@@ -14,7 +39,15 @@ export default new Vuex.Store({
     },
     total: null,
     ids: [],
-    split: false,
+    // split: false,
+    splitFilters: {
+      crops_important1: 10
+    },
+    split: {
+      filtered: [],
+      total: null,
+      sidebar: false
+    },
     sidebar: false
   },
   mutations: {
@@ -22,33 +55,29 @@ export default new Vuex.Store({
       state.farmers = payload.value
       state.filtered = filter.all(state.farmers, state.filters)
       state.total = state.filtered.length
+      state.split.filtered = state.filtered
+      state.split.total = state.split.filtered.length
+    },
+    resetFilters(state) {
+      state.filters = {crops_important1: 10}
+      state.filtered = filter.all(state.farmers, state.filters)
+      state.total = state.filtered.length
     },
     updateFilters(state, payload) {
-      if (payload.element == 'range') {
-        state.filters[payload.name] = [Number(payload.value[0]), Number(payload.value[1])]
-      }
-      else if (payload.element == 'checkbox') {
-        if (!state.filters[payload.name]) {
-          state.filters[payload.name] = []
-        }
-        let index = state.filters[payload.name].indexOf(payload.value)
-        if (index > -1) {
-          state.filters[payload.name].splice(index, 1);
-        } else {
-          state.filters[payload.name].push(payload.value)
-        }
-      } else if (payload.operator) {
-        state.filters[payload.name] = {
-          operator: payload.operator,
-          value: payload.value,
-          steps: payload.steps
-        }
-      } else {
-        state.filters[payload.name] = payload.value
-      }
+      update(state, payload, 'filters')
       state.filtered = filter.all(state.farmers, state.filters)
-      console.log(state.filtered[0]);
       state.total = state.filtered.length
+    },
+    resetSplitFilters(state) {
+      state.splitFilters = {crops_important1: 10}
+      state.split.filtered = filter.all(state.farmers, state.splitFilters)
+      state.split.total = state.split.filtered.length
+    },
+    updateSplitFilters(state, payload) {
+      update(state, payload, 'splitFilters')
+      state.split.filtered = filter.all(state.farmers, state.splitFilters)
+      state.split.total = state.split.filtered.length
+      console.log(state.split.total);
     },
     updateTotal(state, payload) {
       state.total = payload.value
@@ -56,11 +85,16 @@ export default new Vuex.Store({
     addID(state, payload) {
       state.ids.push(payload.value)
     },
-    toggleSplit(state){
-      state.split = !state.split
-    },
     toggleSidebar(state){
       state.sidebar = !state.sidebar
+    },
+    toggleSplitSidebar(state, value = 'none'){
+      if (value === 'none') {
+        state.split.sidebar = !state.split.sidebar
+      } else {
+        state.split.sidebar = value
+      }
+
     }
   },
   actions: {},

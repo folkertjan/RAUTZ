@@ -12,6 +12,25 @@ const data = file =>
 // hh_income_perc_smallbusiness
 // hh_income_perc_livestock
 // hh_income_perc_ etc
+
+const checkValues = (objArr, value = false) => {
+  if (!value) {
+    objArr.map(obj => {
+      const keys = Object.keys(obj)
+      keys.forEach(key => {
+        obj[key] = isNaN(obj[key]) ? 0 : obj[key]
+      })
+      return obj
+    })
+  } else {
+    objArr.map(obj => {
+      obj.value = isNaN(obj.value) ? 0 : obj.value
+      return obj
+    })
+  }
+
+  return objArr
+}
 const landsize = (data, mean = false) => {
   let land;
   if (mean) {
@@ -21,6 +40,25 @@ const landsize = (data, mean = false) => {
   }
   return land
 }
+
+const ppi = (data, mean = false) => {
+  let ppi
+  if (mean) {
+    ppi = {
+      d190: Math.round(d3.mean(data.map(farmer => Number(farmer.PPI_190dollar_day.split(',').join('.'))))),
+      d310: Math.round(d3.mean(data.map(farmer => Number(farmer.PPI_310dollar_day.split(',').join('.')))))
+    }
+  } else {
+    ppi = 0
+    ppi = {
+      d190: Math.round(d3.median(data.map(farmer => Number(farmer.PPI_190dollar_day.split(',').join('.'))))),
+      d310: Math.round(d3.median(data.map(farmer => Number(farmer.PPI_310dollar_day.split(',').join('.')))))
+    }
+  }
+  const result = [{name: 'Below $1.90 a day', value: ppi.d190}, {name: 'Below $3.10 a day', value: ppi.d310}, {name: 'Over $3.10 a day', value: 100 - ppi.d310}]
+  return {values: result, domain: result.map(d => d.name), colors: ['#e0b730', '#e0b730'] }
+}
+
 const income = (data, mean = false) => {
   const filtered = data.filter(farmer => {
     const cocoa_income = farmer.cocoa_marketing_income_usd.split(',').join('.')
@@ -63,6 +101,7 @@ const income = (data, mean = false) => {
     memsize: Math.round(memsize)
   }
 }
+
 const nutrients = data => {
   let reform = [
     {
@@ -96,8 +135,9 @@ const nutrients = data => {
       )
     },
   ]
-  reform = reform.sort((a,b) => a.value - b.value)
-  const result = {values: reform.map(obj => (isNaN(obj.value) ? { name: obj.name, value: 0 } : obj)), domain: reform.map(d => d.name), colors: ['#e0b730', '#e0b730'] }
+  reform = checkValues(reform, true)
+  reform.sort((a,b) => a.value - b.value)
+  const result = {values: reform, domain: reform.map(d => d.name), colors: ['#e0b730', '#e0b730'] }
   return result
 }
 
@@ -105,25 +145,26 @@ const incomeStack = (data, mean = false) => {
   let reform;
   if (mean){
     reform = {
-      cocoa: Math.round(d3.mean(data.map(farmer => Number(farmer.hh_income_perc_cocoa.split(',').join('.')) === NaN ? 0 : Number(farmer.hh_income_perc_cocoa.split(',').join('.')))) * 100),
-      othercrops: Math.round(d3.mean(data.map(farmer => Number(farmer.hh_income_perc_othercrops.split(',').join('.')) === NaN ? 0 : Number(farmer.hh_income_perc_othercrops.split(',').join('.')))) * 100),
-      livestock: Math.round(d3.mean(data.map(farmer => Number(farmer.hh_income_perc_livestock.split(',').join('.')) === NaN ? 0 : Number(farmer.hh_income_perc_livestock.split(',').join('.')))) * 100),
-      smallbusiness: Math.round(d3.mean(data.map(farmer => Number(farmer.hh_income_perc_smallbusiness.split(',').join('.')) === NaN ? 0 : Number(farmer.hh_income_perc_smallbusiness.split(',').join('.')))) * 100),
+      cocoa: Math.round(d3.mean(data.map(farmer => Number(farmer.hh_income_perc_cocoa.split(',').join('.')))) * 100),
+      othercrops: Math.round(d3.mean(data.map(farmer => Number(farmer.hh_income_perc_othercrops.split(',').join('.')))) * 100),
+      livestock: Math.round(d3.mean(data.map(farmer => Number(farmer.hh_income_perc_livestock.split(',').join('.')))) * 100),
+      smallbusiness: Math.round(d3.mean(data.map(farmer => Number(farmer.hh_income_perc_smallbusiness.split(',').join('.')))) * 100),
       total: 100
     }
   } else {
     reform = {
-      cocoa: Math.round(d3.median(data.map(farmer => Number(farmer.hh_income_perc_cocoa.split(',').join('.')) === NaN ? 0 : Number(farmer.hh_income_perc_cocoa.split(',').join('.')))) * 100),
-      othercrops: Math.round(d3.median(data.map(farmer => Number(farmer.hh_income_perc_othercrops.split(',').join('.')) === NaN ? 0 : Number(farmer.hh_income_perc_othercrops.split(',').join('.')))) * 100),
-      livestock: Math.round(d3.median(data.map(farmer => Number(farmer.hh_income_perc_livestock.split(',').join('.')) === NaN ? 0 : Number(farmer.hh_income_perc_livestock.split(',').join('.')))) * 100),
-      smallbusiness: Math.round(d3.median(data.map(farmer => Number(farmer.hh_income_perc_smallbusiness.split(',').join('.')) === NaN ? 0 : Number(farmer.hh_income_perc_smallbusiness.split(',').join('.')))) * 100),
+      cocoa: Math.round(d3.median(data.map(farmer => Number(farmer.hh_income_perc_cocoa.split(',').join('.')))) * 100),
+      othercrops: Math.round(d3.median(data.map(farmer => Number(farmer.hh_income_perc_othercrops.split(',').join('.')))) * 100),
+      livestock: Math.round(d3.median(data.map(farmer => Number(farmer.hh_income_perc_livestock.split(',').join('.')))) * 100),
+      smallbusiness: Math.round(d3.median(data.map(farmer => Number(farmer.hh_income_perc_smallbusiness.split(',').join('.')))) * 100),
       total: 100
     }
   }
 
   const rest = reform['cocoa'] + reform['othercrops'] + reform['livestock'] + reform['smallbusiness']
   reform['other'] = 100 - rest
-  return {values: [reform], domain: ['Income'], colors: ['#618058', '#dbeed5'] }
+  reform = checkValues([reform])
+  return {values: reform, domain: ['Income'], colors: ['#618058', '#dbeed5'] }
 }
 
 const foodsecStack = data => {
@@ -139,4 +180,4 @@ const foodsecStack = data => {
   return {values: reform, domain: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'], colors: ['#e68577', '#b5e2e1']}
 }
 
-export default { data, landsize, income, nutrients, incomeStack, foodsecStack}
+export default { data, landsize, ppi, income, nutrients, incomeStack, foodsecStack}

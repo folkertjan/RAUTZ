@@ -11,13 +11,14 @@
           <div class="counter">
             <p>Based on <span>{{ total }}</span> farmers</p>
           </div>
-          <stacked-bar-chart :id="'bar-foodsec'" :data="farmers" :factor="0.7" :perc="size"/>
+          <stacked-bar-chart :id="'bar-foodsec'" :data="farmers" :factor="0.6" :perc="size" :axisTitles="['Percentage share of meals per day', '']"/>
         </div>
         <div class="chart">
           <div class="counter">
-            <p>Based on <span>{{ total }}</span> farmers</p>
+            <p>Based on <span>{{ splitTotal }}</span> farmers</p>
           </div>
-          <stacked-bar-chart :id="'bar-foodsec-split'" :data="splitdata" :factor="0.7" :perc="0.5"/>
+          <stacked-bar-chart :id="'bar-foodsec-split'" :data="splitdata" :factor="0.6" :perc="0.5" :axisTitles="['Percentage share of meals per day', '']"/>
+          <button class="btn filter-btn" @click="toggleEdit">Edit selection<div></div><div></div></button>
         </div>
       </div>
       <button class="btn splitbtn" @click="toggleSplit">{{split ? 'Return' : 'Compare'}}</button>
@@ -43,12 +44,15 @@ export default {
       farmers: [],
       split: false,
       splitdata: [],
-      size: 0.5
+      size: 0.6
     }
   },
   computed: {
     total() {
       return store.state.total
+    },
+    splitTotal() {
+      return store.state.split.total
     }
   },
   mounted() {
@@ -60,15 +64,25 @@ export default {
         const data =
           mutation.type === 'updateFarmers' ? state.farmers : state.filtered
         this.farmers = format.foodsecStack(data)
+        if (this.splitdata.length === 0) {
+          this.splitdata = this.farmers
+        }
+      }
+    })
+    store.subscribe((mutation, state) => {
+      if (mutation.type === 'updateSplitFilters') {
+        const data = state.split.filtered
+        this.splitdata = format.foodsecStack(data)
       }
     })
   },
   methods: {
     toggleSplit: function() {
-      store.commit('toggleSplit')
-      this.splitdata = this.split ? [] : this.farmers
       this.split = !this.split
-      this.size = this.split ? 0.5 : 0.5
+      this.size = this.split ? 0.5 : 0.6
+    },
+    toggleEdit: function() {
+      store.commit('toggleSplitSidebar')
     }
   }
 }

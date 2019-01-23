@@ -33,7 +33,7 @@ section {
     z-index: 1;
     background-color: $color-section-light;
   }
-  &:nth-of-type(even){
+  &:nth-of-type(odd){
     background-color: $color-section-dark;
     color: $color-font-light;
     &::before {

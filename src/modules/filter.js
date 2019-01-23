@@ -1,15 +1,15 @@
 import store from '@/store.js'
 
-const update = e => store.commit({
-    type: 'updateFilters',
+const update = (e, type = 'updateFilters') => store.commit({
+    type: type,
     value: e.target.value,
     operator: e.target.dataset.operator,
     steps: e.target.dataset.steps,
     name: e.target.name,
     element: e.target.type
   })
-const updateRange = e => store.commit({
-    type: 'updateFilters',
+const updateRange = (e, type = 'updateFilters') => store.commit({
+    type: type,
     value: e.value,
     name: e.name,
     element: 'range'

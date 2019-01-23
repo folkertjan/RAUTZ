@@ -1,36 +1,31 @@
 <template lang="html">
   <div class="split-form-holder">
     <form class="form-farmer">
-      <fieldset>
-        <legend>Head farmer</legend>
+      <div class="fieldset">
         <p>Select sex</p>
         <div class="input-group">
-          <input-label @changed="onChange" split='split' name="head_gender" text="Any" value="" type="radio" checked="true"></input-label>
-          <input-label @changed="onChange" split='split' name="head_gender" text="Male" value="1" type="radio"></input-label>
-          <input-label @changed="onChange" split='split' name="head_gender" text="Female" value="2" type="radio"></input-label>
+          <input-label @changed="onChange" split='split' name="head_gender" text="Male" value="1" type="checkbox"></input-label>
+          <input-label @changed="onChange" split='split' name="head_gender" text="Female" value="2" type="checkbox"></input-label>
         </div>
         <p>Selling certified cocoa or not?</p>
         <div class="input-group">
-          <input-label @changed="onChange" split='split' name="cocoa_certification_yn" text="Any" value="" type="radio" checked="true"></input-label>
-          <input-label @changed="onChange" split='split' name="cocoa_certification_yn" text="No" value="0" type="radio"></input-label>
-          <input-label @changed="onChange" split='split' name="cocoa_certification_yn" text="Yes" value="1" type="radio"></input-label>
+          <input-label @changed="onChange" split='split' name="cocoa_certification_yn" text="No" value="0" type="checkbox"></input-label>
+          <input-label @changed="onChange" split='split' name="cocoa_certification_yn" text="Yes" value="1" type="checkbox"></input-label>
         </div>
         <p>Education level</p>
         <div class="input-group">
           <select-label @changed="onChange" split='split' name="head_education" operator="><" steps="3" text="Select education level" :values="edulevel"></select-label>
         </div>
-      </fieldset>
-      <fieldset>
-        <legend>Household</legend>
+      </div>
+      <div class="fieldset">
         <p>Household size</p>
         <div class="input-group">
-          <select-label @changed="onChange" split='split' name="hhmem_number" operator="<=" text="Select amount of people in household" :values="householdsize"></select-label>
+          <range-label @changed="onChange" name="hhmem_number" text="Select household size" min="1" max="17" step="1" />
         </div>
-      </fieldset>
+      </div>
     </form>
     <form class="form-land">
-      <fieldset>
-        <legend>Crops</legend>
+      <div class="fieldset">
         <p>Most important crop</p>
         <div class="input-group">
           <select-label @changed="onChange" split='split' name="crops_important1" text="Select most important crop" :values="crops"></select-label>
@@ -39,7 +34,11 @@
         <div class="input-group">
           <select-label @changed="onChange" split='split' name="crops_important2" text="Select second most important crop" :values="crops"></select-label>
         </div>
-      </fieldset>
+        <p>Land size in Ha</p>
+        <div class="input-group">
+          <range-label @changed="onChange" name="all_land_owned_ha" text="" min="0" max="20" step="1" />
+        </div>
+      </div>
     </form>
   </div>
 
@@ -49,14 +48,20 @@
 import filter from '@/modules/filter.js'
 import InputLabel from '@/components/forms/InputLabel.vue'
 import SelectLabel from '@/components/forms/SelectLabel.vue'
+import RangeLabel from '@/components/forms/RangeLabel.vue'
 export default {
   components: {
     InputLabel,
-    SelectLabel
+    SelectLabel,
+    RangeLabel
   },
   methods: {
-    onChange: function() {
-      console.log('values updated')
+    onChange: function(e) {
+      if (e.target.type == 'range') {
+        filter.updateRange(e, 'updateSplitFilters')
+      } else {
+        filter.update(e, 'updateSplitFilters')
+      }
     }
   },
   data() {

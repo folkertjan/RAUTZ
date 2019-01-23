@@ -5,11 +5,14 @@ const show = (element, text) =>
     .select(`#${element} .tooltip`)
     .style(
       'left',
-      `${d3.event.pageX}px`
+      `${d3.event.pageX - document.querySelector('#'+element).offsetLeft}px`
     ) /* d3.event learned from denniswegereef (https://github.com/denniswegereef) */
     .style(
       'top',
-      `${d3.event.pageY - 30}px`
+      () => {
+        console.log(d3.event.pageY, document.querySelector('#'+element).offsetTop);
+        return `${d3.event.pageY - document.querySelector('#'+element).offsetTop}px`
+      }
     ) /* d3.event learned from denniswegereef (https://github.com/denniswegereef) */
     .transition()
     .duration(300)

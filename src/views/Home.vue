@@ -1,5 +1,6 @@
 <template>
-  <main :class="'home' + (sidebar ? ' sidebar' : '') + (loading ? ' loading' : '')">
+  <main :class="'home' + (loading ? ' loading' : '')">
+    <background />
     <section class="" v-if="screenWidth < 1080 && screenHeight < 768">
       <div class="container">
         <h3>This is a desktop site</h3>
@@ -7,6 +8,7 @@
     </section>
     <div class="section-holder" v-else>
       <landing />
+      <introduction />
       <farmer />
       <land />
       <plant-nutrients />
@@ -21,7 +23,9 @@
 // @ is an alias to /src
 import store from '@/store.js'
 import format from '@/modules/format.js'
+import Background from '@/components/organisms/Background.vue'
 import Landing from '@/components/sections/Landing.vue'
+import Introduction from '@/components/sections/Introduction.vue'
 import Farmer from '@/components/sections/Farmer.vue'
 import Land from '@/components/sections/Land.vue'
 import Income from '@/components/sections/Income.vue'
@@ -32,7 +36,9 @@ import SiteSummary from '@/components/sections/SiteSummary.vue'
 export default {
   name: 'home',
   components: {
+    Background,
     Landing,
+    Introduction,
     Farmer,
     Land,
     PlantNutrients,
@@ -94,8 +100,5 @@ h1 {
 }
 main {
   transition: all 0.3s ease-out;
-  &.sidebar {
-    transform: translateX(-5rem);
-  }
 }
 </style>

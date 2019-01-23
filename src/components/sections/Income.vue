@@ -8,13 +8,14 @@
           <div class="counter">
             <p>Based on <span>{{ total }}</span> farmers</p>
           </div>
-          <stacked-bar-chart :id="'bar-income'" :data="farmers" :factor="1.25" :perc="0.3"/>
+          <stacked-bar-chart :id="'bar-income'" :data="farmers" :factor="0.8" :perc="0.45" :axisTitles="['Percentage share of income', '']"/>
         </div>
         <div class="chart light-bg center">
           <div class="counter">
-            <p>Based on <span>{{ total }}</span> farmers</p>
+            <p>Based on <span>{{ splitTotal }}</span> farmers</p>
           </div>
-          <stacked-bar-chart :id="'bar-income-split'" :data="splitdata" :factor="1.25" :perc="0.3"/>
+          <stacked-bar-chart :id="'bar-income-split'" :data="splitdata" :factor="0.8" :perc="0.45" :axisTitles="['Percentage share of income', '']"/>
+          <button class="btn filter-btn" @click="toggleEdit">Edit selection<div></div><div></div></button>
         </div>
       </div>
       <button class="btn splitbtn" @click="toggleSplit">{{split ? 'Return' : 'Compare'}}</button>
@@ -39,12 +40,15 @@ export default {
     return {
       farmers: [],
       split: false,
-      splitdata: [],
+      splitdata: []
     }
   },
   computed: {
     total() {
       return store.state.total
+    },
+    splitTotal() {
+      return store.state.split.total
     }
   },
   mounted() {
@@ -56,14 +60,28 @@ export default {
         const data =
           mutation.type === 'updateFarmers' ? state.farmers : state.filtered
         this.farmers = format.incomeStack(data)
+        if (this.splitdata.length === 0) {
+          this.splitdata = this.farmers
+        }
+      }
+    })
+    store.subscribe((mutation, state) => {
+      if (mutation.type === 'updateSplitFilters') {
+        const data = state.split.filtered
+        this.splitdata = format.incomeStack(data)
       }
     })
   },
   methods: {
     toggleSplit: function() {
-      store.commit('toggleSplit')
-      this.splitdata = this.split ? [] : this.farmers
       this.split = !this.split
+      if (this.split === false) {
+        store.commit('toggleSplitSidebar', false)
+      }
+
+    },
+    toggleEdit: function() {
+      store.commit('toggleSplitSidebar')
     }
   }
 }

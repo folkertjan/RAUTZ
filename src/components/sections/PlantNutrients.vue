@@ -14,9 +14,10 @@
         </div>
         <div class="chart center">
           <div class="counter">
-            <p>Based on <span>{{ total }}</span> farmers</p>
+            <p>Based on <span>{{ splitTotal }}</span> farmers</p>
           </div>
           <side-bar-chart :id="'bar-nutrients-split'" :data="splitdata" :factor="0.5" :perc="0.5"/>
+          <button class="btn filter-btn" @click="toggleEdit">Edit selection<div></div><div></div></button>
         </div>
       </div>
       <button class="btn splitbtn" @click="toggleSplit">{{split ? 'Return' : 'Compare'}}</button>
@@ -29,11 +30,11 @@
 import store from '@/store.js'
 import SideBarChart from '@/components/charts/SideBarChart.vue'
 import Leaves from '@/components/organisms/Leaves.vue'
-// import BarChart from '@/components/charts/BarChart.vue'
+import FormSplit from '@/components/forms/FormSplit.vue'
 import format from '@/modules/format.js'
 export default {
   components: {
-    // BarChart
+    FormSplit,
     SideBarChart,
     Leaves
   },
@@ -41,12 +42,15 @@ export default {
     return {
       farmers: [],
       split: false,
-      splitdata: [],
+      splitdata: []
     }
   },
   computed: {
     total() {
       return store.state.total
+    },
+    splitTotal() {
+      return store.state.split.total
     }
   },
   mounted() {
@@ -58,14 +62,28 @@ export default {
         const data =
           mutation.type === 'updateFarmers' ? state.farmers : state.filtered
         this.farmers = format.nutrients(data)
+        if (this.splitdata.length === 0) {
+          this.splitdata = this.farmers
+        }
+      }
+    })
+    store.subscribe((mutation, state) => {
+      if (mutation.type === 'updateSplitFilters') {
+        const data = state.split.filtered
+        this.splitdata = format.nutrients(data)
       }
     })
   },
   methods: {
     toggleSplit: function() {
-      store.commit('toggleSplit')
-      this.splitdata = this.split ? [] : this.farmers
       this.split = !this.split
+      if (this.split === false) {
+        store.commit('toggleSplitSidebar', false)
+      }
+
+    },
+    toggleEdit: function() {
+      store.commit('toggleSplitSidebar')
     }
   }
 }

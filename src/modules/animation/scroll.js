@@ -10,8 +10,7 @@ const scroll = (href) => {
   const link = href.split('/')
   console.log(link, link[link.length - 1])
   const section = document.querySelector(link[link.length - 1])
-  const page = document.querySelector('body')
+  const page = document.querySelector('main')
   TweenLite.to(page, 1.2, {scrollTo: section})
 }
-
 export default { scroll }

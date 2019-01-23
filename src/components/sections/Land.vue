@@ -6,8 +6,13 @@
       <div class="form-holder">
         <form-land />
         <div class="img-holder">
-          <img src="images/land/land_small.svg" alt="">
-          <p class="landsize">{{ `${animLandsize} Ha` }}</p>
+          <transition-group name="fade">
+            <img :key="1" v-if="landsize <= 7" src="images/land/land_small.svg" alt="">
+            <img :key="2" v-if="landsize > 7 && landsize <= 14" src="images/land/land_large.svg" alt="">
+            <img :key="3" v-if="landsize > 14" src="images/land/land_medium.svg" alt="">
+          </transition-group>
+          <p class="landsize">Median landsisze: <span>{{ animLandsize }}</span> Ha</p>
+          <p>based on {{total}} farmers</p>
         </div>
       </div>
     </div>
@@ -32,8 +37,11 @@ export default {
     }
   },
   computed: {
-    animLandsize: function() {
+    animLandsize() {
       return this.newLandsize.toFixed(2);
+    },
+    total() {
+      return store.state.total
     }
   },
   watch: {
@@ -67,18 +75,37 @@ export default {
   }
   .landsize {
     margin-top: 2rem;
-    font-size: 1.5rem;
-    font-weight: 700;
+    span {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
   }
   .img-holder {
+    min-height: 60vh;
     width: 100%;
+    position: relative;
+    margin-bottom: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    img {
-      max-width: 100%;
-      height: auto;
+    p {
+      position: absolute;
+      bottom: -2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      &:last-of-type{
+        bottom: 0;
+      }
     }
+  }
+  img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 100%;
+    width: auto;
   }
 }
 

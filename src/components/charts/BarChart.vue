@@ -1,5 +1,5 @@
 <template lang="html">
-  <div :id="id">
+  <div :id="id" class="svg-holder">
   </div>
 </template>
 
