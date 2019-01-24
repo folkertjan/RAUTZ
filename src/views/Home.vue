@@ -1,5 +1,5 @@
 <template>
-  <main :class="'home' + (loading ? ' loading' : '')">
+  <main id="main" :class="'home' + (loading ? ' loading' : '')">
     <background />
     <section class="" v-if="screenWidth < 1080 && screenHeight < 768">
       <div class="container">
