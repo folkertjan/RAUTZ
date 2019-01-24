@@ -1,4 +1,5 @@
-import TweenLite from 'gsap/all'
+import TweenLite from 'gsap/TweenLite'
+import 'gsap/ScrollToPlugin'
 
 const scroll = href => {
   const link = href.split('/')
