@@ -12,6 +12,7 @@ Interactive [vue](https://vuejs.org/) storytelling website which shows insights 
   - [Code](#code-journey)
 - [To do](#to-do)
 - [Credits](#credits)
+- [Sources](#sources)
 
 ## Install
 ```bash
@@ -49,3 +50,7 @@ Now that we had a framework to write the frontend of the website in, I had to ma
 - [Matthias Leuhof](https://github.com/MatthiasLeuhof) - Illustrations, data editing & concepting
 - [Sam Hofman](https://github.com/labraksam) - UI Design & concepting
 - [Angelique Janssen](https://github.com/angeliquejanssen) - UI Design & data editing
+
+## Sources
+### Dataset
+- Bymolt, R., Laven, A., & Tyszler, M. (2018) [dataset]. Demystifying the cocoa sector in Ghana and Côte d’Ivoire. Retrieved from [https://doi.org/10.7910/DVN/82TWZJ](https://doi.org/10.7910/DVN/82TWZJ), Harvard Dataverse, V2
