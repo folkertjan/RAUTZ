@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import TweenLite from 'gsap/TweenLite'
 import FormLand from '@/components/forms/FormLand.vue'
 import Leaves from '@/components/organisms/Leaves.vue'
 import Tag from '@/components/atoms/Tag.vue'

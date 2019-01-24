@@ -35,11 +35,9 @@ import SideBarChart from '@/components/charts/SideBarChart.vue'
 import Leaves from '@/components/organisms/Leaves.vue'
 import Tag from '@/components/atoms/Tag.vue'
 import InfoPopup from '@/components/atoms/InfoPopup.vue'
-import FormSplit from '@/components/forms/FormSplit.vue'
 import format from '@/modules/format.js'
 export default {
   components: {
-    FormSplit,
     SideBarChart,
     Leaves,
     Tag,

@@ -38,7 +38,7 @@ export default {
     const main = document.querySelector('main')
     const section = document.querySelector('#plant-nutrients')
     const toggle = document.querySelector('#toggle')
-    main.addEventListener('scroll', function(e) {
+    main.addEventListener('scroll', function() {
       if (toggle.classList.contains('show')) {
         if (this.scrollTop < section.offsetTop - section.offsetHeight / 2) {
           toggle.classList.remove('show')

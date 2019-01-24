@@ -48,7 +48,6 @@ const all = (arr, filters) => {
         return filters[key].indexOf(obj[key]) > -1
       }
       // object
-      let check
       let objVal = obj[key]
       let { operator, value, steps } = filters[key]
       if (!value.length || value === 'any') {

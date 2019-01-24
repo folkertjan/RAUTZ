@@ -23,7 +23,7 @@
         </div>
         <div class="flex-item">
           <h3>Poverty Propability Index</h3>
-          <p>The Poverty Probability Index is a score based on ten questions (such as : What kind of material is used for the walls?). This score gives insight in how much a household might earn each day. The 2011 edition also provides chances for earning over or under a specific amount.</p>
+          <p>It is based on the answers to 10 questions about a household’s characteristics and asset ownership, which are scored to compute the likelihood that the household is living below the poverty line – or above by only a narrow margin. This score gives insight in the chance of how much a household might earn each day. </p>
           <div class="chart light-bg">
             <h3>Chance for households to earn under or over a specific amount per day</h3>
             <div class="counter">

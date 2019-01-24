@@ -151,14 +151,14 @@ const bar = {
     rect
       .enter()
       .append('rect')
-      .attr('title', (d, i) => d.name)
+      .attr('title', d => d.name)
       .on('mouseover', d => tooltip.show(element, `${d.name}: ${d.value}`))
       .on('mouseout', () => tooltip.hide(element))
       /* merge function learned from this great video by Curran Kelleher: https://www.youtube.com/watch?v=IyIAR65G-GQ */
       .attr('height', y.bandwidth())
       .attr('width', 0)
       .attr('y', d => y(d.name))
-      .attr('x', d => x(0))
+      .attr('x', () => x(0))
       .style('fill', (d, i) => color(i))
       .merge(rect)
       .transition()

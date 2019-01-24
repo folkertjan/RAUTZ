@@ -26,7 +26,6 @@
       </div>
       <button class="btn splitbtn" @click="toggleSplit">{{split ? 'Return' : 'Compare'}}</button>
     </div>
-    </div>
     <leaves />
   </section>
 </template>
