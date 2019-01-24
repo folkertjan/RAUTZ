@@ -31,7 +31,7 @@ export default {
   mounted() {
     store.subscribe((mutation, state) => {
       if (mutation.type === 'updateFilters' && this.split == '') {
-        const filters = store.state.filters
+        const filters = state.filters
         if (filters[this.name]) {
           if (typeof filters[this.name] == 'string') {
             if (!this.value) {

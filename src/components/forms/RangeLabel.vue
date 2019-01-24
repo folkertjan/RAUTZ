@@ -40,25 +40,6 @@ export default {
     sort: function() {
       return [this.minValue, this.maxValue].sort((a, b) => a - b)
     }
-  },
-  mounted() {
-    // store.subscribe((mutation, state) => {
-    //   if (mutation.type === 'updateFilters' && !this.split) {
-    //     const filters = state.filters
-    //     const element = document.querySelector('#input-' + this.uniqueID)
-    //     if (typeof(filters[this.name]) === 'object') {
-    //       if (filters[this.name].indexOf(this.value) > -1) {
-    //         element.checked = true
-    //       } else {
-    //         element.checked = false
-    //       }
-    //     } else if (filters[this.name] == this.value) {
-    //       element.checked = true
-    //     }
-    //   } else if (this.split) {
-    //     // split bar
-    //   }
-    // })
   }
 }
 </script>
