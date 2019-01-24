@@ -6,6 +6,6 @@ const scroll = href => {
   console.log(link, link[link.length - 1])
   const section = document.querySelector(link[link.length - 1])
   const page = document.querySelector('#main')
-  TweenLite.to(page, 1.2, { scrollTo: {x: 0, y: section.offsetTop})
+  TweenLite.to(page, 1.2, { scrollTo: { x: 0, y: section.offsetTop } })
 }
 export default { scroll }
