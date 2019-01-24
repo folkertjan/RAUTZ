@@ -159,6 +159,20 @@ svg {
     font-weight: normal;
   }
 }
+.chart {
+  h3 {
+    max-width: 90%;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.5;
+    font-size: 1.25rem;
+  }
+  &:not(.light-bg) {
+    h3 {
+      color: #fff;
+    }
+  }
+}
 .split-holder {
   overflow: hidden;
   white-space: nowrap;

@@ -2,9 +2,10 @@
   <section id="introduction">
     <div class="container">
       <h2>Introduction</h2>
-      <p>The cocoa farmer’s in Ghana make their living off of growing and selling their cocoa crops. With this, they are able to support their household, provide an education for themselves or their children, and afford a decent living situation. However, lots of farmers also try to make some extra money on the side by growing different crops, starting small business’ and sometimes also borrowing money.</p>
-      <p>By using this tool you can customize the living situation and standards of a farmer in Ghana.</p>
-      <p>By doing this we hope that you can create a clearer view of what the life of a farmer looks like. Use the splitscreen option to compare different farmers and see what kind of influence this has on different aspects of their lifestyle.</p>
+      <p>Cocoa is the essential ingredient in many of the world's most loved products. It's production mainly takes place in Ghana and Cote d’Ivoire. But how much do we actually know about this sector, and the lives of the farmers producing it?</p>
+      <p>In 2016, the Royal Tropical Institute (KIT) initiated a study into the lives of approximately 3000 randomly selected farmer households in Ghana and Cote d'Ivoire. This resulted in a dataset which can help demystify the cocoa sector in these countries.</p>
+      <p>This interactive website aims to provide visitors with the tools to explore this data themselves. By providing you with multiple filter options and comparative functions you can see what influences a farmers income and food security.</p>
+      <p>For demonstration purposes we decided to focus on the data from Ghana, which provided us with 1560 different households to explore.</p>
     </div>
     <leaves />
   </section>

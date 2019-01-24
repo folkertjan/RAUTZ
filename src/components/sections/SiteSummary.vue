@@ -2,20 +2,22 @@
   <section id="summary">
     <div class="container">
       <h2>Summary</h2>
-      <p>After gaining insight in the last couple of chapters, you can gain insight in how much the farmers actually earn each month. In addition you can get an idea of how much each household might earn each day based on the PPI statistics.</p>
+      <p>To conclude the comparison, we collected information about the actual amount of money made by the selection of farmer households. Not every farmer could provide an accurate amount, so the pool of households is somewhat smaller than in previous results, so keep this in mind when viewing the chart.</p>
       <div class="flex">
         <div class="flex-item">
           <div class="content">
             <h3>Income per month</h3>
-            <p>Because there is data on what share of income farmer households have, we can indicate what they earn each month. We compare this to the Living Income benchmark of Ghana, which is a specific amount of money needed by a family of 5 (2 adults and 3 children) for a fairly comfortable life.</p>
+            <p>Because there is data on what share of income farmer households have, we can indicate what they earn each month. We compare this to the LivingIncome benchmark of Ghana, which is a specific amount of money needed by a family of 5 (2 adults and 3 children) for a fairly comfortable life.</p>
             <p>Living income Ghana: $329 per family per month</p>
           </div>
           <div class="income-counter">
             <h4>${{incomeAnim}}</h4>
+            <p>per household per month</p>
             <p>(${{(income / 12 / memsize).toFixed(2)}} per family member)</p>
           </div>
           <p>*based on {{total}} farmers, with a mean household size of {{memsize}} members</p>
           <div class="chart light-bg">
+            <h3>Income sources</h3>
             <stacked-bar-chart :id="'bar-income-summary'" :data="farmers" :factor="0.8" :perc="0.45" :axisTitles="['Percentage share of income', '']"/>
           </div>
         </div>
@@ -23,10 +25,11 @@
           <h3>Poverty Propability Index</h3>
           <p>The Poverty Probability Index is a score based on ten questions (such as : What kind of material is used for the walls?). This score gives insight in how much a household might earn each day. The 2011 edition also provides chances for earning over or under a specific amount.</p>
           <div class="chart light-bg">
+            <h3>Chance for households to earn under or over a specific amount per day</h3>
             <div class="counter">
               <p>Based on <span>{{ all }}</span> farmers</p>
             </div>
-            <side-bar-chart :id="'bar-ppi'" :data="ppi" :factor="0.5" :perc="0.5" />
+            <side-bar-chart :id="'bar-ppi'" :data="ppi" :factor="0.5" :perc="0.5"  :axisTitles="['', 'Change in %']" />
           </div>
         </div>
       </div>
@@ -62,12 +65,12 @@ export default {
   },
   computed: {
     incomeAnim: function() {
-      return this.incomePerMemb.toFixed(2);
+      return this.incomePerMemb.toFixed(2)
     }
   },
   watch: {
     income: function(newValue) {
-      TweenLite.to(this.$data, 0.5, { incomePerMemb: newValue / 12 });
+      TweenLite.to(this.$data, 0.5, { incomePerMemb: newValue / 12 })
     }
   },
   mounted() {
@@ -78,18 +81,16 @@ export default {
       ) {
         const data =
           mutation.type === 'updateFarmers' ? state.farmers : state.filtered
-        // this.ppi = format.ppi(data)
-        // this.all = state.filtered.length
+        this.ppi = format.ppi(data)
+        this.all = state.filtered.length
         const result = format.income(data)
         this.farmers = format.incomeStack(result.filtered)
-        this.all = result.filtered.length
-        this.ppi = format.ppi(result.filtered)
         this.income = result.income
         this.total = result.total
         this.memsize = result.memsize
       }
     })
-  },
+  }
 }
 </script>
 
@@ -115,18 +116,27 @@ export default {
     }
   }
 }
+.chart {
+  h3 {
+    text-align: left;
+  }
+}
 .income-counter {
   padding: 1.25rem 1.25rem;
   background-color: lightgrey;
   border-radius: 25px;
   display: table;
-  h3, h4 {
+  h3,
+  h4 {
     margin: 0;
   }
   h4 {
     font-size: 2.5rem;
   }
   margin-bottom: 1rem;
+  p {
+    margin-bottom: 0;
+  }
   + p {
     margin-bottom: 3rem;
   }

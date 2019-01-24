@@ -35,14 +35,12 @@
 </template>
 
 <script>
-export default {
-}
+export default {}
 </script>
 
 <style lang="scss">
-
 // main styling is important here, see base.scss for main styling
-.parallax__layer{
+.parallax__layer {
   z-index: -1;
   position: absolute;
   top: 0;
@@ -50,7 +48,7 @@ export default {
   bottom: 0;
   left: 0;
 
-  img{
+  img {
     display: block;
     position: absolute;
     bottom: 0;
@@ -65,8 +63,8 @@ $parallax__layers: 6;
 
 @for $i from 0 through $parallax__layers {
   $x: ($parallax__layers - $i) / 2;
-  .parallax__layer__#{$i}{
-     transform: translateZ(-100 * $x - 20#{px}) scale($x + 1.2);
+  .parallax__layer__#{$i} {
+    transform: translateZ(-100 * $x - 20#{px}) scale($x + 1.2);
   }
 }
 </style>

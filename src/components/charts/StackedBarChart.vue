@@ -9,17 +9,16 @@ export default {
   props: ['id', 'data', 'factor', 'perc', 'axisTitles'],
   mounted() {
     stack.draw(this.id, this.data, this.factor, this.perc, this.axisTitles)
-    window.addEventListener('resize', () => stack.update(this.id, this.data, this.factor, this.perc, this.axisTitles))
+    window.addEventListener('resize', () =>
+      stack.update(this.id, this.data, this.factor, this.perc)
+    )
   },
   watch: {
     data() {
-      stack.update(this.id, this.data, this.factor, this.perc, this.axisTitles)
+      stack.update(this.id, this.data, this.factor, this.perc)
     },
     perc() {
-      // document.querySelector(`#${this.id}`).innerHTML = ''
-      // stack.draw(this.id, this.data, this.factor, this.perc)
-      stack.update(this.id, this.data, this.factor, this.perc, this.axisTitles)
-
+      stack.update(this.id, this.data, this.factor, this.perc)
     }
   }
 }

@@ -3,7 +3,7 @@
     <div class="container">
       <h1>A cocoa farmer's life in Ghana</h1>
       <div class="scroll-btn-holder">
-        <button @click="scroll" id="scroll-btn" type="button" name="button">please scroll down to start</button>
+        <button @click="scroll" id="scroll-btn" type="button" name="button">scroll down to start reading</button>
       </div>
     </div>
 
@@ -80,9 +80,10 @@ export default {
         border-color: var(--color-dark-blue);
       }
     }
-    &::before, &::after {
+    &::before,
+    &::after {
       display: none;
-      content: "";
+      content: '';
       position: absolute;
       top: -3rem;
       left: 50%;
@@ -103,7 +104,8 @@ export default {
       animation: scroll 1.5s ease-out infinite;
     }
   }
-  #loader, #loaded {
+  #loader,
+  #loaded {
     opacity: 0;
     pointer-events: none;
     transition: all 0.3s ease-out;

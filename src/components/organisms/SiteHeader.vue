@@ -81,9 +81,10 @@ header {
     &:focus {
       outline: none;
     }
-    &::after, &::before {
+    &::after,
+    &::before {
       display: block;
-      content: "";
+      content: '';
       width: 35px;
       height: 2px;
       background-color: var(--color-gold);
@@ -98,7 +99,8 @@ header {
     }
     &:hover {
       color: var(--color-grey);
-      &::before, &::after {
+      &::before,
+      &::after {
         background-color: var(--color-grey);
       }
     }
@@ -142,7 +144,8 @@ header {
     #nav-button {
       background-color: var(--color-grey);
       color: var(--color-dark);
-      &::before, &::after {
+      &::before,
+      &::after {
         width: 20px;
         background-color: var(--color-dark);
       }

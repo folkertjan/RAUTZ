@@ -26,7 +26,7 @@ export default {
       if (mutation.type === 'updateFilters' && !this.split) {
         const filters = state.filters
         const element = document.querySelector('#input-' + this.uniqueID)
-        if (typeof(filters[this.name]) === 'object') {
+        if (typeof filters[this.name] === 'object') {
           if (filters[this.name].indexOf(this.value) > -1) {
             element.checked = true
           } else {

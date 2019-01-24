@@ -2,19 +2,19 @@
   <div class="split-form-holder">
     <form class="form-farmer">
       <div class="fieldset">
-        <p>Select sex</p>
+        <p>Gender</p>
         <div class="input-group">
           <input-label @changed="onChange" split='split' name="head_gender" text="Male" value="1" type="checkbox"></input-label>
           <input-label @changed="onChange" split='split' name="head_gender" text="Female" value="2" type="checkbox"></input-label>
         </div>
-        <p>Selling certified cocoa or not?</p>
-        <div class="input-group">
-          <input-label @changed="onChange" split='split' name="cocoa_certification_yn" text="No" value="0" type="checkbox"></input-label>
-          <input-label @changed="onChange" split='split' name="cocoa_certification_yn" text="Yes" value="1" type="checkbox"></input-label>
-        </div>
-        <p>Education level</p>
+        <p>Level of education</p>
         <div class="input-group">
           <select-label @changed="onChange" split='split' name="head_education" operator="><" steps="3" text="Select education level" :values="edulevel"></select-label>
+        </div>
+        <p>Certified?</p>
+        <div class="input-group">
+          <input-label @changed="onChange" split='split' name="cocoa_certification_yn" text="Yes" value="1" type="checkbox"></input-label>
+          <input-label @changed="onChange" split='split' name="cocoa_certification_yn" text="No" value="0" type="checkbox"></input-label>
         </div>
       </div>
       <div class="fieldset">

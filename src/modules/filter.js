@@ -1,6 +1,7 @@
 import store from '@/store.js'
 
-const update = (e, type = 'updateFilters') => store.commit({
+const update = (e, type = 'updateFilters') =>
+  store.commit({
     type: type,
     value: e.target.value,
     operator: e.target.dataset.operator,
@@ -8,7 +9,8 @@ const update = (e, type = 'updateFilters') => store.commit({
     name: e.target.name,
     element: e.target.type
   })
-const updateRange = (e, type = 'updateFilters') => store.commit({
+const updateRange = (e, type = 'updateFilters') =>
+  store.commit({
     type: type,
     value: e.value,
     name: e.name,
@@ -30,7 +32,10 @@ const all = (arr, filters) => {
         if (filters[key].length === 0) {
           return true
         }
-        if (typeof(filters[key][0]) === 'number' && typeof(filters[key][1]) === 'number') {
+        if (
+          typeof filters[key][0] === 'number' &&
+          typeof filters[key][1] === 'number'
+        ) {
           const ranges = filters[key].sort((a, b) => a - b)
           let value = obj[key]
           if (obj[key].indexOf(',') > -1) {

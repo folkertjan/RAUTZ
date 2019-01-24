@@ -6,10 +6,12 @@
 <script>
 import horizontal from '@/modules/d3/horizontal.js'
 export default {
-  props: ['id', 'data', 'factor', 'perc'],
+  props: ['id', 'data', 'factor', 'perc', 'axisTitles'],
   mounted() {
-    horizontal.draw(this.id, this.data, this.factor, this.perc)
-    window.addEventListener('resize', () => horizontal.update(this.id, this.data, this.factor, this.perc))
+    horizontal.draw(this.id, this.data, this.factor, this.perc, this.axisTitles)
+    window.addEventListener('resize', () =>
+      horizontal.update(this.id, this.data, this.factor, this.perc)
+    )
   },
   watch: {
     data() {

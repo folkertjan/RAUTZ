@@ -32,11 +32,15 @@ const checkValues = (objArr, value = false) => {
   return objArr
 }
 const landsize = (data, mean = false) => {
-  let land;
+  let land
   if (mean) {
-    land = d3.mean(data.map(farmer => Number(farmer.all_land_owned_ha.split(',').join('.'))))
+    land = d3.mean(
+      data.map(farmer => Number(farmer.all_land_owned_ha.split(',').join('.')))
+    )
   } else {
-    land = d3.median(data.map(farmer => Number(farmer.all_land_owned_ha.split(',').join('.'))))
+    land = d3.median(
+      data.map(farmer => Number(farmer.all_land_owned_ha.split(',').join('.')))
+    )
   }
   return land
 }
@@ -45,18 +49,50 @@ const ppi = (data, mean = false) => {
   let ppi
   if (mean) {
     ppi = {
-      d190: Math.round(d3.mean(data.map(farmer => Number(farmer.PPI_190dollar_day.split(',').join('.'))))),
-      d310: Math.round(d3.mean(data.map(farmer => Number(farmer.PPI_310dollar_day.split(',').join('.')))))
+      d190: Math.round(
+        d3.mean(
+          data.map(farmer =>
+            Number(farmer.PPI_190dollar_day.split(',').join('.'))
+          )
+        )
+      ),
+      d310: Math.round(
+        d3.mean(
+          data.map(farmer =>
+            Number(farmer.PPI_310dollar_day.split(',').join('.'))
+          )
+        )
+      )
     }
   } else {
     ppi = 0
     ppi = {
-      d190: Math.round(d3.median(data.map(farmer => Number(farmer.PPI_190dollar_day.split(',').join('.'))))),
-      d310: Math.round(d3.median(data.map(farmer => Number(farmer.PPI_310dollar_day.split(',').join('.')))))
+      d190: Math.round(
+        d3.median(
+          data.map(farmer =>
+            Number(farmer.PPI_190dollar_day.split(',').join('.'))
+          )
+        )
+      ),
+      d310: Math.round(
+        d3.median(
+          data.map(farmer =>
+            Number(farmer.PPI_310dollar_day.split(',').join('.'))
+          )
+        )
+      )
     }
   }
-  const result = [{name: 'Below $1.90 a day', value: ppi.d190}, {name: 'Below $3.10 a day', value: ppi.d310}, {name: 'Over $3.10 a day', value: 100 - ppi.d310}]
-  return {values: result, domain: result.map(d => d.name), colors: ['#e0b730', '#e0b730'] }
+  const result = [
+    { name: 'Below $1.90 a day', value: ppi.d190 },
+    { name: 'Below $3.10 a day', value: ppi.d310 },
+    { name: 'Over $3.10 a day', value: 100 - ppi.d310 }
+  ]
+  return {
+    values: result,
+    domain: result.map(d => d.name),
+    colors: ['#e0b730', '#e0b730']
+  }
 }
 
 const income = (data, mean = false) => {
@@ -64,34 +100,36 @@ const income = (data, mean = false) => {
     const cocoa_income = farmer.cocoa_marketing_income_usd.split(',').join('.')
     return Number(cocoa_income) > 0
   })
-  let income, memsize;
+  let income, memsize
   if (mean) {
     income = d3.mean(
-      filtered.map(
-        farmer => {
-          const cocoa_income = farmer.cocoa_marketing_income_usd.split(',').join('.')
-          return Number(cocoa_income) / Number(farmer.hh_income_perc_cocoa.split(',').join('.'))
-        }
-      )
+      filtered.map(farmer => {
+        const cocoa_income = farmer.cocoa_marketing_income_usd
+          .split(',')
+          .join('.')
+        return (
+          Number(cocoa_income) /
+          Number(farmer.hh_income_perc_cocoa.split(',').join('.'))
+        )
+      })
     )
     memsize = d3.mean(
-      filtered.map(
-        farmer => Number(farmer.hhmem_number.split(',').join('.'))
-      )
+      filtered.map(farmer => Number(farmer.hhmem_number.split(',').join('.')))
     )
   } else {
     income = d3.median(
-      filtered.map(
-        farmer => {
-          const cocoa_income = farmer.cocoa_marketing_income_usd.split(',').join('.')
-          return Number(cocoa_income) / Number(farmer.hh_income_perc_cocoa.split(',').join('.'))
-        }
-      )
+      filtered.map(farmer => {
+        const cocoa_income = farmer.cocoa_marketing_income_usd
+          .split(',')
+          .join('.')
+        return (
+          Number(cocoa_income) /
+          Number(farmer.hh_income_perc_cocoa.split(',').join('.'))
+        )
+      })
     )
     memsize = d3.median(
-      filtered.map(
-        farmer => Number(farmer.hhmem_number.split(',').join('.'))
-      )
+      filtered.map(farmer => Number(farmer.hhmem_number.split(',').join('.')))
     )
   }
   return {
@@ -107,77 +145,184 @@ const nutrients = data => {
     {
       name: 'Granular fertilizer',
       value: Math.round(
-        data.filter(farmer => farmer.cocoa_gfert_yn == 1).length / data.length * 100
+        (data.filter(farmer => farmer.cocoa_gfert_yn == 1).length /
+          data.length) *
+          100
       )
     },
     {
       name: 'Liquid fertilizer',
       value: Math.round(
-        data.filter(farmer => farmer.cocoa_lfert_yn == 1).length / data.length * 100
+        (data.filter(farmer => farmer.cocoa_lfert_yn == 1).length /
+          data.length) *
+          100
       )
     },
     {
       name: 'Fungicides',
       value: Math.round(
-        data.filter(farmer => farmer.cocoa_fung_yn == 1).length / data.length * 100
+        (data.filter(farmer => farmer.cocoa_fung_yn == 1).length /
+          data.length) *
+          100
       )
     },
     {
       name: 'Herbicides',
       value: Math.round(
-        data.filter(farmer => farmer.cocoa_herb_yn == 1).length / data.length * 100
+        (data.filter(farmer => farmer.cocoa_herb_yn == 1).length /
+          data.length) *
+          100
       )
     },
     {
       name: 'Pesticides',
       value: Math.round(
-        data.filter(farmer => farmer.cocoa_pest_yn == 1).length / data.length * 100
+        (data.filter(farmer => farmer.cocoa_pest_yn == 1).length /
+          data.length) *
+          100
       )
-    },
+    }
   ]
   reform = checkValues(reform, true)
-  reform.sort((a,b) => a.value - b.value)
-  const result = {values: reform, domain: reform.map(d => d.name), colors: ['#e0b730', '#e0b730'] }
+  reform.sort((a, b) => a.value - b.value)
+  const result = {
+    values: reform,
+    domain: reform.map(d => d.name),
+    colors: ['#e0b730', '#e0b730']
+  }
   return result
 }
 
 const incomeStack = (data, mean = false) => {
-  let reform;
-  if (mean){
+  let reform
+  if (mean) {
     reform = {
-      cocoa: Math.round(d3.mean(data.map(farmer => Number(farmer.hh_income_perc_cocoa.split(',').join('.')))) * 100),
-      othercrops: Math.round(d3.mean(data.map(farmer => Number(farmer.hh_income_perc_othercrops.split(',').join('.')))) * 100),
-      livestock: Math.round(d3.mean(data.map(farmer => Number(farmer.hh_income_perc_livestock.split(',').join('.')))) * 100),
-      smallbusiness: Math.round(d3.mean(data.map(farmer => Number(farmer.hh_income_perc_smallbusiness.split(',').join('.')))) * 100),
+      cocoa: Math.round(
+        d3.mean(
+          data.map(farmer =>
+            Number(farmer.hh_income_perc_cocoa.split(',').join('.'))
+          )
+        ) * 100
+      ),
+      othercrops: Math.round(
+        d3.mean(
+          data.map(farmer =>
+            Number(farmer.hh_income_perc_othercrops.split(',').join('.'))
+          )
+        ) * 100
+      ),
+      livestock: Math.round(
+        d3.mean(
+          data.map(farmer =>
+            Number(farmer.hh_income_perc_livestock.split(',').join('.'))
+          )
+        ) * 100
+      ),
+      smallbusiness: Math.round(
+        d3.mean(
+          data.map(farmer =>
+            Number(farmer.hh_income_perc_smallbusiness.split(',').join('.'))
+          )
+        ) * 100
+      ),
       total: 100
     }
   } else {
     reform = {
-      cocoa: Math.round(d3.median(data.map(farmer => Number(farmer.hh_income_perc_cocoa.split(',').join('.')))) * 100),
-      othercrops: Math.round(d3.median(data.map(farmer => Number(farmer.hh_income_perc_othercrops.split(',').join('.')))) * 100),
-      livestock: Math.round(d3.median(data.map(farmer => Number(farmer.hh_income_perc_livestock.split(',').join('.')))) * 100),
-      smallbusiness: Math.round(d3.median(data.map(farmer => Number(farmer.hh_income_perc_smallbusiness.split(',').join('.')))) * 100),
+      cocoa: Math.round(
+        d3.median(
+          data.map(farmer =>
+            Number(farmer.hh_income_perc_cocoa.split(',').join('.'))
+          )
+        ) * 100
+      ),
+      othercrops: Math.round(
+        d3.median(
+          data.map(farmer =>
+            Number(farmer.hh_income_perc_othercrops.split(',').join('.'))
+          )
+        ) * 100
+      ),
+      livestock: Math.round(
+        d3.median(
+          data.map(farmer =>
+            Number(farmer.hh_income_perc_livestock.split(',').join('.'))
+          )
+        ) * 100
+      ),
+      smallbusiness: Math.round(
+        d3.median(
+          data.map(farmer =>
+            Number(farmer.hh_income_perc_smallbusiness.split(',').join('.'))
+          )
+        ) * 100
+      ),
       total: 100
     }
   }
 
-  const rest = reform['cocoa'] + reform['othercrops'] + reform['livestock'] + reform['smallbusiness']
+  const rest =
+    reform['cocoa'] +
+    reform['othercrops'] +
+    reform['livestock'] +
+    reform['smallbusiness']
   reform['other'] = 100 - rest
   reform = checkValues([reform])
-  return {values: reform, domain: ['Income'], colors: ['#618058', '#dbeed5'] }
+  return {
+    values: reform,
+    domain: ['Income sources'],
+    colors: ['#618058', '#dbeed5']
+  }
 }
 
 const foodsecStack = data => {
   const reform = []
-  for (let i = 0; i < 12; i++){
+  for (let i = 0; i < 12; i++) {
     reform.push({
-      one: Math.round(data.filter(farmer => farmer['foodsec' + (i + 1)] == 1).length / data.length * 100),
-      two: Math.round(data.filter(farmer => farmer['foodsec' + (i + 1)] == 2).length / data.length * 100),
-      three: Math.round(data.filter(farmer => farmer['foodsec' + (i + 1)] == 3).length / data.length * 100),
+      one: Math.round(
+        (data.filter(farmer => farmer['foodsec' + (i + 1)] == 1).length /
+          data.length) *
+          100
+      ),
+      two: Math.round(
+        (data.filter(farmer => farmer['foodsec' + (i + 1)] == 2).length /
+          data.length) *
+          100
+      ),
+      three: Math.round(
+        (data.filter(farmer => farmer['foodsec' + (i + 1)] == 3).length /
+          data.length) *
+          100
+      ),
       total: 100
     })
   }
-  return {values: reform, domain: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'], colors: ['#e68577', '#b5e2e1']}
+  return {
+    values: reform,
+    domain: [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Okt',
+      'Nov',
+      'Dec'
+    ],
+    colors: ['#e68577', '#b5e2e1']
+  }
 }
 
-export default { data, landsize, ppi, income, nutrients, incomeStack, foodsecStack}
+export default {
+  data,
+  landsize,
+  ppi,
+  income,
+  nutrients,
+  incomeStack,
+  foodsecStack
+}

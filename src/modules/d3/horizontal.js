@@ -3,9 +3,9 @@ import tooltip from '@/modules/d3/tooltip.js'
 import helper from '@/modules/d3/helper.js'
 
 const bar = {
-  margin: { top: 20, right: 25, bottom: 40, left: 175 },
+  margin: { top: 20, right: 25, bottom: 60, left: 175 },
 
-  draw(element, data, factor, perc) {
+  draw(element, data, factor, perc, axisTitles) {
     const bounds = this.bounds(factor, perc)
     const width = bounds.width
     const height = bounds.height
@@ -36,26 +36,24 @@ const bar = {
 		https://bl.ocks.org/d3noob/23e42c8f67210ac6c678db2cd07a747e
 		Small tweaks to work with my visualisation
 		*/
-    // axis
-    //   .append('text')
-    //   .attr(
-    //     'transform',
-    //     `rotate(90) translate(${width - this.margin.bottom / 2}, ${0 -
-    //       width})`
-    //   )
-    //   .attr('dy', '0.75em')
-    //   .style('text-anchor', 'middle')
-    //
-    // axis
-    //   .append('text')
-    //   .attr(
-    //     'transform',
-    //     `rotate(-90) translate(${0 -
-    //       width / 2 +
-    //       this.margin.bottom / 2}, ${10})`
-    //   )
-    //   .attr('dy', '0.75em')
-    //   .style('text-anchor', 'middle')
+    axis
+      .append('text')
+      .attr(
+        'transform',
+        `rotate(-90) translate(${0 -
+          height / 2 +
+          this.margin.bottom / 2}, ${0})`
+      )
+      .attr('dy', '0.75em')
+      .style('text-anchor', 'middle')
+      .text(axisTitles[0])
+
+    axis
+      .append('text')
+      .attr('transform', `translate(${this.margin.left - 5}, ${height - 15})`)
+      .attr('dy', '0.75em')
+      .style('text-anchor', 'left')
+      .text(axisTitles[1])
     /* == End source == */
 
     svg.append('g').classed('parent', true)
@@ -70,7 +68,6 @@ const bar = {
     const bounds = this.bounds(factor, perc)
     const width = bounds.width
     const height = bounds.height
-
 
     const color = helper.color(data.values, data.colors)
 
@@ -94,7 +91,6 @@ const bar = {
       .domain(data.domain)
       .padding(0.6)
       .range([height - this.margin.bottom, this.margin.top])
-
 
     const x = d3
       .scaleLinear()
@@ -130,7 +126,6 @@ const bar = {
     const rect = chart.selectAll('rect').data(data.values)
 
     const text = chart.selectAll('text').data(data.values)
-
 
     text
       .enter()
@@ -183,7 +178,7 @@ const bar = {
   bounds(factor, perc) {
     const scrwidth = document.querySelector('#landing .container').offsetWidth
     let width = scrwidth * perc
-    return {width, height: width * factor}
+    return { width, height: width * factor }
   }
 }
 

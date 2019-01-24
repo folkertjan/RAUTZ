@@ -2,6 +2,7 @@
   <div class="sidebar-holder" :class="open ? 'open' : ''">
     <button id="toggle" @click="toggle">{{open ? 'Close' : 'Filters'}}<div class="dot"></div><div class="dot"></div></button>
     <div id="sidebar">
+      <button @click="toggle" class="sidebar-close" type="button" name="button">close</button>
       <div class="form-holder main">
         <h2>Main</h2>
         <p>Edit selection of main graphs</p>
@@ -47,7 +48,6 @@ export default {
           toggle.classList.add('show')
         }
       }
-
     })
   }
 }
@@ -70,6 +70,15 @@ export default {
   overflow-x: hidden;
   z-index: 5;
   display: flex;
+  .sidebar-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.75rem;
+  }
+  .info-popup {
+    display: none;
+  }
   .form-holder {
     direction: ltr;
     padding: 3rem 2rem;
@@ -90,12 +99,14 @@ export default {
   #sidebar {
     transform: translateX(20rem);
   }
-  #toggle{
+  #toggle {
     transform: translate(20rem, -50%);
     background-color: var(--color-grey);
     border-color: var(--color-grey);
     color: var(--color-dark);
-    &::after, &::before, div {
+    &::after,
+    &::before,
+    div {
       background-color: var(--color-dark);
     }
     div {
@@ -131,13 +142,15 @@ export default {
   &.show {
     left: 0;
   }
-  &::after, &::before, div {
+  &::after,
+  &::before,
+  div {
     width: 40px;
     height: 3px;
     display: block;
     position: absolute;
     background-color: var(--color-white-broken);
-    content: "";
+    content: '';
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -164,7 +177,9 @@ export default {
     background-color: lightgrey;
     border-color: lightgrey;
     color: var(--color-dark);
-    &::after, &::before, div {
+    &::after,
+    &::before,
+    div {
       background-color: var(--color-dark);
     }
   }

@@ -42,30 +42,23 @@ const bar = {
       .append('text')
       .attr(
         'transform',
-        `rotate(-90) translate(${0 -
-          height / 2 +
-          this.margin.bottom / 2}, ${0})`
+        `rotate(-90) translate(${0 - height + this.margin.bottom - 4}, ${0})`
       )
       .attr('dy', '0.75em')
-      .style('text-anchor', 'middle')
+      .style('text-anchor', 'left')
       .text(axisTitles[0])
 
     axis
       .append('text')
-      .attr(
-        'transform',
-        `rotate(90) translate(${height - this.margin.bottom / 2}, ${0 -
-          width})`
-      )
+      .attr('transform', `translate(${this.margin.left - 5}, ${height - 15})`)
       .attr('dy', '0.75em')
-      .style('text-anchor', 'middle')
+      .style('text-anchor', 'left')
       .text(axisTitles[1])
 
     /* == End source == */
 
-    svg.append('g')
-      .classed('parent', true)
-      // .attr('transform', `translate(${this.margin.left * 2},0)`)
+    svg.append('g').classed('parent', true)
+    // .attr('transform', `translate(${this.margin.left * 2},0)`)
 
     this.update(element, data, factor, perc)
   },
@@ -82,8 +75,7 @@ const bar = {
     const index = keys.indexOf('total')
     if (index !== -1) keys.splice(index, 1)
 
-    const stack = d3.stack()
-      .keys(keys)
+    const stack = d3.stack().keys(keys)
 
     const stacked = stack(data.values)
 
@@ -96,7 +88,6 @@ const bar = {
 		via https://beta.observablehq.com/@mbostock/d3-bar-chart
 		Small edits by me to work with my visualisation
 		*/
-
 
     const x = d3
       .scaleBand()
@@ -131,7 +122,6 @@ const bar = {
 
     helper.legend.update(svg, stacked, color, width, height, this.margin)
 
-
     svg.select('.xAxis').call(xAxis)
 
     svg.select('.yAxis').call(yAxis)
@@ -139,9 +129,7 @@ const bar = {
 
     const chart = d3.select(`#${element} .parent`)
 
-    const group = chart
-      .selectAll('g')
-      .data(stacked)
+    const group = chart.selectAll('g').data(stacked)
 
     const groupEnter = group
       .enter()
@@ -152,18 +140,22 @@ const bar = {
     const rect = groupEnter
       .merge(group)
       .selectAll('rect')
-      .data(d=>d)
+      .data(d => d)
 
     const enterRect = rect
       .enter()
       .append('rect')
-      .on('mouseover', (d, i, all) => tooltip.show(element, `${all[i].parentNode.getAttribute('title')}: ${d[1] - d[0]}`))
+      .on('mouseover', (d, i, all) =>
+        tooltip.show(
+          element,
+          `${all[i].parentNode.getAttribute('title')}: ${d[1] - d[0]}`
+        )
+      )
       .on('mouseout', () => tooltip.hide(element))
       .attr('height', d => y(d[0]) - y(d[1]))
       .attr('width', x.bandwidth())
       .attr('x', (d, i) => x(data.domain[i]))
       .attr('y', d => y(d[1]))
-
 
     rect
       .exit()
@@ -180,14 +172,11 @@ const bar = {
       .attr('width', x.bandwidth())
       .attr('x', (d, i) => x(data.domain[i]))
       .attr('y', d => y(d[1]))
-
-
   },
   bounds(factor, perc) {
     const scrwidth = document.querySelector('#landing .container').offsetWidth
     let width = scrwidth * perc
-    return {width, height: width * factor}
-
+    return { width, height: width * factor }
   }
 }
 
