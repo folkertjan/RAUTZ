@@ -1,5 +1,5 @@
 # RAUTZ (Ghanian cocoa farmers)
-![Overview](docs/screenshot_1.png)
+![Overview](docs/Screenshot_1.png)
 ## Summary
 Interactive [vue](https://vuejs.org/) storytelling website which shows insights in the livelyhood of Ghanian cocoa farmers.   
 [check the live prototype here](https://rautz.netlify.com)
@@ -28,7 +28,7 @@ npm run build
 ## Prototype
 [check the live prototype here](https://rautz.netlify.com)
 
-![Overview](docs/screenshot_2.png)
+![Overview](docs/Screenshot_2.png)
 
 ## Process
 ### Concept
