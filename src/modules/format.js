@@ -28,7 +28,6 @@ const checkValues = (objArr, value = false) => {
       return obj
     })
   }
-
   return objArr
 }
 const landsize = (data, mean = false) => {
@@ -42,7 +41,7 @@ const landsize = (data, mean = false) => {
       data.map(farmer => Number(farmer.all_land_owned_ha.split(',').join('.')))
     )
   }
-  return land
+  return isNaN(Number(land)) ? 0 : Number(land)
 }
 
 const ppi = (data, mean = false) => {
@@ -65,7 +64,6 @@ const ppi = (data, mean = false) => {
       )
     }
   } else {
-    ppi = 0
     ppi = {
       d190: Math.round(
         d3.median(
@@ -83,10 +81,11 @@ const ppi = (data, mean = false) => {
       )
     }
   }
+  ppi = checkValues([ppi])
   const result = [
-    { name: 'Below $1.90 a day', value: ppi.d190 },
-    { name: 'Below $3.10 a day', value: ppi.d310 },
-    { name: 'Over $3.10 a day', value: 100 - ppi.d310 }
+    { name: 'Below $1.90 a day', value: ppi[0].d190 },
+    { name: 'Below $3.10 a day', value: ppi[0].d310 },
+    { name: 'Over $3.10 a day', value: 100 - ppi[0].d310 }
   ]
   return {
     values: result,
@@ -132,6 +131,7 @@ const income = (data, mean = false) => {
       filtered.map(farmer => Number(farmer.hhmem_number.split(',').join('.')))
     )
   }
+  memsize = isNaN(memsize) ? 0 : memsize
   return {
     filtered: filtered,
     total: filtered.length,
@@ -297,21 +297,22 @@ const foodsecStack = data => {
       total: 100
     })
   }
+  const result = checkValues(reform)
   return {
-    values: reform,
+    values: result,
     domain: [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
+      'Ja',
+      'Fe',
+      'Ma',
+      'Ap',
+      'Ma',
       'Jun',
       'Jul',
-      'Aug',
-      'Sep',
-      'Okt',
-      'Nov',
-      'Dec'
+      'Au',
+      'Se',
+      'Ok',
+      'No',
+      'De'
     ],
     colors: ['#e68577', '#b5e2e1']
   }

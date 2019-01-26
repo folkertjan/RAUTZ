@@ -13,7 +13,7 @@
           <div class="income-counter">
             <h4>${{incomeAnim}}</h4>
             <p>per household per month</p>
-            <p>(${{(income / 12 / memsize).toFixed(2)}} per family member)</p>
+            <p>(${{isNaN(income / 12 / memsize) ? 0 : (income / 12 / memsize).toFixed(2)}} per family member)</p>
           </div>
           <p>*based on {{total}} farmers, with a mean household size of {{memsize}} members</p>
           <div class="chart light-bg">
@@ -70,7 +70,9 @@ export default {
   },
   watch: {
     income: function(newValue) {
-      TweenLite.to(this.$data, 0.5, { incomePerMemb: newValue / 12 })
+      TweenLite.to(this.$data, 0.5, {
+        incomePerMemb: isNaN(newValue) ? 0 : newValue / 12
+      })
     }
   },
   mounted() {
