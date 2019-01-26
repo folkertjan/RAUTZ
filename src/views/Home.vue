@@ -1,12 +1,6 @@
 <template>
   <main id="main" :class="'home' + (loading ? ' loading' : '')">
     <background />
-    <!-- <section class="" v-if="screenWidth < 1080 && screenHeight < 768">
-      <div class="container">
-        <h3 style="color: white">This is a desktop site</h3>
-        <p style="color: white">Please view this website on a monitor</p>
-      </div>
-    </section> -->
     <div class="section-holder" >
       <landing />
       <introduction />
@@ -68,21 +62,10 @@ export default {
         })
         this.loading = false
       })
-    },
-    screen: function() {
-      const w = window,
-        d = document,
-        e = d.documentElement,
-        g = d.getElementsByTagName('body')[0],
-        x = w.innerWidth || e.clientWidth || g.clientWidth,
-        y = w.innerHeight || e.clientHeight || g.clientHeight
-      this.screenWidth = x
-      this.screenHeight = y
     }
   },
   mounted() {
     this.init()
-    this.screen()
     store.subscribe((mutation, state) => {
       if (mutation.type === 'toggleSidebar') {
         this.sidebar = state.sidebar
