@@ -176,19 +176,27 @@ form {
       }
     }
     .fieldset-input-holder {
-      display: grid;
-      grid-template-columns: repeat(2, auto);
-      > div {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        &:nth-of-type(odd){
-          border-right: 3px solid $color-white-muddy;
+      .input-education {
+        padding-top: 2rem;
+        padding-bottom: 3rem;
+      }
+      @media screen and (min-width: 40rem) {
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        > div {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          &:nth-of-type(odd){
+            border-right: 3px solid $color-white-muddy;
+          }
+        }
+        .input-education {
+          align-items: center;
+          padding: 0;
         }
       }
-      .input-education {
-        align-items: center;
-      }
+
       .input-certified {
         padding-top: 2rem;
         padding-bottom: 3rem;

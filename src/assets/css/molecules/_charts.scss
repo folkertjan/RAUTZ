@@ -176,9 +176,11 @@ svg {
 .split-holder {
   overflow: hidden;
   white-space: nowrap;
-  display: flex;
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
+  @media screen and (min-width: 60rem) {
+    display: flex;
+  }
   .content {
     min-width: 50%;
     transition: all 0.5s;
@@ -188,8 +190,12 @@ svg {
     padding-right: 5rem;
   }
   .chart {
-    min-width: 50%;
-    width: 50%;
+    min-width: 100%;
+    width: 100%;
+    @media screen and (min-width: 60rem) {
+      min-width: 50%;
+      width: 50%;
+    }
     display: inline-flex;
     transition: all 0.5s;
     flex-direction: column;

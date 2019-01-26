@@ -176,8 +176,27 @@ const bar = {
       .remove()
   },
   bounds(factor, perc) {
+    let width
+    const w = window,
+      d = document,
+      e = d.documentElement,
+      g = d.getElementsByTagName('body')[0],
+      x = w.innerWidth || e.clientWidth || g.clientWidth
+    //y = w.innerHeight || e.clientHeight || g.clientHeight
+
     const scrwidth = document.querySelector('#landing .container').offsetWidth
-    let width = scrwidth * perc
+
+    if (x < 60 * 16) {
+      width = scrwidth
+    } else {
+      width = scrwidth * perc
+    }
+
+    if (x < 35 * 16) {
+      this.margin = { top: 20, left: 20, right: 20, bottom: 40 }
+    } else {
+      this.margin = { top: 20, right: 25, bottom: 60, left: 175 }
+    }
     return { width, height: width * factor }
   }
 }

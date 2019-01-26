@@ -1,12 +1,13 @@
 <template>
   <main id="main" :class="'home' + (loading ? ' loading' : '')">
     <background />
-    <section class="" v-if="screenWidth < 1080 && screenHeight < 768">
+    <!-- <section class="" v-if="screenWidth < 1080 && screenHeight < 768">
       <div class="container">
-        <h3>This is a desktop site</h3>
+        <h3 style="color: white">This is a desktop site</h3>
+        <p style="color: white">Please view this website on a monitor</p>
       </div>
-    </section>
-    <div class="section-holder" v-else>
+    </section> -->
+    <div class="section-holder" >
       <landing />
       <introduction />
       <farmer />

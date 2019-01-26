@@ -108,13 +108,15 @@ export default {
   }
 }
 .flex {
-  display: flex;
-  padding: 3rem 0;
-  > div {
-    width: 50%;
-    padding-right: 3rem;
-    &:last-of-type {
-      padding-left: 3rem;
+  @media screen and (min-width: 60rem) {
+    display: flex;
+    padding: 3rem 0;
+    > div {
+      width: 50%;
+      padding-right: 3rem;
+      &:last-of-type {
+        padding-left: 3rem;
+      }
     }
   }
 }

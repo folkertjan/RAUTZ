@@ -76,10 +76,12 @@ export default {
 <style lang="scss">
 #land {
   .form-holder {
-    form {
-      margin-right: 5rem;
+    @media screen and (min-width: 40rem) {
+      form {
+        margin-right: 5rem;
+      }
+      display: flex;
     }
-    display: flex;
   }
   .landsize {
     margin-top: 2rem;
@@ -97,6 +99,7 @@ export default {
     flex-direction: column;
     align-items: center;
     > p {
+      white-space: nowrap;
       position: absolute;
       bottom: -2rem;
       left: 50%;
