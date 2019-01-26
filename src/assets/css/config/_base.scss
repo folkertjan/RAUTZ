@@ -91,21 +91,24 @@ html {
   overflow-y: auto;
   background-color: transparent;
 }
-html::-webkit-scrollbar {
-  display: none;
-}
-::-webkit-scrollbar {
-  width: 0.5rem;
-  height: 0.5rem;
-}
-::-webkit-scrollbar-track {
-  background: $color-section-light;
+@media screen and (min-width: 70rem) {
+  html::-webkit-scrollbar {
+    display: none;
+  }
+  ::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+  ::-webkit-scrollbar-track {
+    background: $color-section-light;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: $color-font-dark;
+    cursor: pointer;
+  }
 }
 
-::-webkit-scrollbar-thumb {
-  background-color: $color-font-dark;
-  cursor: pointer;
-}
 main {
   perspective: 100px;
   height: 100vh;
