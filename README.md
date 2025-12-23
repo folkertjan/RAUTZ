@@ -2,7 +2,7 @@
 ![Overview](docs/Screenshot_1.png)
 ## Summary
 Interactive [vue](https://vuejs.org/) storytelling website which shows insights in the livelyhood of Ghanaian cocoa farmers.   
-[check the live prototype here](https://rautz.netlify.com)
+[check the live prototype here](https://rautz.netlify.app)
 
 ## Table of Contents
 - [Install](#install)
